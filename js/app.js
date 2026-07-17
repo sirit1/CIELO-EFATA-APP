@@ -100,6 +100,17 @@ const App = {
     },
 
     procesarEnvio: function () {
+        const nombre = document.getElementById('nombre-usuario').value;
+        const email = document.getElementById('email-usuario').value;
+        const diag = this.getInforme();
+
+        fetch("https://script.google.com/macros/s/AKfycbwa8UMlGeC5JBsijOU0KubifkerKi1gWK9EH8_jFE9iKrlFlvnHCTdzOVKO_5Fedns7BA/exec", {
+            method: "POST",
+            mode: "no-cors",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ nombre: nombre, email: email, resultado: diag.titulo })
+        });
+
         alert("¡Excelente decisión! Tu Guía de Restauración ha sido enviada.");
         location.reload();
     },
