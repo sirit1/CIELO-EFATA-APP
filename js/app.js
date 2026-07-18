@@ -104,7 +104,7 @@ const App = {
         const email = document.getElementById('email-usuario').value;
         const diag = this.getInforme();
 
-        fetch("https://script.google.com/macros/s/AKfycbwa8UMlGeC5JBsijOU0KubifkerKi1gWK9EH8_jFE9iKrlFlvnHCTdzOVKO_5Fedns7BA/exec", {
+        fetch("https://script.google.com/macros/s/AKfycbxwDLeIYywbH3eSeJgXhvX-0sBjdk9QMzi6D-mxrMPfgJAwVxNj-4j1TtVWHAzeOaYHRg/exec", {
             method: "POST",
             mode: "no-cors",
             headers: { "Content-Type": "application/json" },
