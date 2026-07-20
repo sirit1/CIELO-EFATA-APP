@@ -1,8 +1,15 @@
 document.addEventListener('DOMContentLoaded', () => {
     const app = document.getElementById('app');
-    if (app) {
-        app.innerHTML = '<h1 style="color: white; font-size: 3rem;">¡Sistema Blindado y Cargado!</h1>';
-    } else {
-        console.error("El contenedor #app NO EXISTE en el DOM.");
+    if (!app) {
+        console.error("El contenedor #app no existe en el DOM");
+        return;
     }
+
+    // Estructura inicial de tu aplicación modular
+    app.innerHTML = `
+        <div style="text-align: center; color: white; font-family: sans-serif; margin-top: 20vh;">
+            <h1>Cielo Efata</h1>
+            <p>Arquitectura modular externa activa y conectada.</p>
+        </div>
+    `;
 });
