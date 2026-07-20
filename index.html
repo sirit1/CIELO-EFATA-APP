@@ -17,13 +17,12 @@
 
     <script>
         /**
-         * ARQUITECTURA CIELO EFATA - Motor Frontend Pro & Google Apps Script
+         * ARQUITECTURA CIELO EFATA - Motor Frontend Pro & Leads WhatsApp
          */
         const CONFIG = {
             supabaseUrl: 'https://xzjoruazhlwmaebnqqbv.supabase.co',
             supabaseKey: 'sb_publishable_AVcvj1Bq_uD7sYhbJZeHWA_NobPbVVF',
-            // URL de tu Web App de Google Apps Script para el envío de correos
-            appsScriptUrl: 'https://script.google.com/macros/s/AKfycbxK7bjQ87pDLA3IYWiHV0o93ZXiHJLm_8uJb0CJSMbHlnWhA6GUIdzVZR7lBsRY5P_P4w/exec' 
+            appsScriptUrl: 'AQUÍ_PEGAS_TU_URL_DE_WEB_APP_APPS_SCRIPT' // Tu URL de Google Apps Script (Línea 19)
         };
 
         let db = null;
@@ -40,6 +39,7 @@
             pasoActual: 0,
             puntaje: 0,
             nombreUsuario: '',
+            whatsappUsuario: '',
             emailUsuario: '',
             preguntas: [
                 "¿Sientes que tus reacciones ante el estrés son automáticas?",
@@ -76,7 +76,7 @@
                         </div>
                     </div>
 
-                    <!-- SECCIÓN DE CREDENCIALES Y AUTORIDAD -->
+                    <!-- CREDENCIALES Y AUTORIDAD -->
                     <div class="grid md:grid-cols-3 gap-8 items-center bg-gradient-to-br from-[#0a0f1d] to-black p-8 md:p-10 rounded-[2.5rem] border border-white/10">
                         <div class="flex justify-center">
                             <a href="https://ibb.co/8nbkQ2Q0" target="_blank">
@@ -92,29 +92,19 @@
                         </div>
                     </div>
 
-                    <!-- VITRINA DE OBRAS CON TODAS LAS PORTADAS (INCLUYENDO GÓLGOTA) -->
+                    <!-- VITRINA DE OBRAS CON TODAS LAS PORTADAS -->
                     <div class="space-y-6 text-center">
                         <h3 class="text-xs font-bold uppercase tracking-[0.3em] text-purple-400">Obras Exegéticas del Autor</h3>
                         <div class="grid grid-cols-2 sm:grid-cols-5 gap-4">
-                           <div class="rounded-2xl overflow-hidden border border-white/10 shadow-lg aspect-[2/3] bg-black/40 p-2">
-                               <a href="https://ibb.co/rf35qN4t" target="_blank"><img src="https://i.ibb.co/h1c2rwDM/la-fe-no-basta-1.png" class="w-full h-full object-cover rounded-xl" alt="La fe no basta"></a>
-                           </div>
-                           <div class="rounded-2xl overflow-hidden border border-white/10 shadow-lg aspect-[2/3] bg-black/40 p-2">
-                               <a href="https://ibb.co/xKdX8Y8Y" target="_blank"><img src="https://i.ibb.co/8ntN4b4b/libro-espejo.png" class="w-full h-full object-cover rounded-xl" alt="Libro espejo"></a>
-                           </div>
-                           <div class="rounded-2xl overflow-hidden border border-white/10 shadow-lg aspect-[2/3] bg-black/40 p-2">
-                               <a href="https://ibb.co/5W88SL4H" target="_blank"><img src="https://i.ibb.co/bgBBCXm9/libro-cielo.png" class="w-full h-full object-cover rounded-xl" alt="Libro cielo"></a>
-                           </div>
-                           <div class="rounded-2xl overflow-hidden border border-white/10 shadow-lg aspect-[2/3] bg-black/40 p-2">
-                               <a href="https://ibb.co/m5q9Z2ZT" target="_blank"><img src="https://i.ibb.co/Xxs70K0L/libro-callar.png" class="w-full h-full object-cover rounded-xl" alt="Libro callar"></a>
-                           </div>
-                           <div class="rounded-2xl overflow-hidden border border-white/10 shadow-lg aspect-[2/3] bg-black/40 p-2 sm:col-span-1 col-span-2">
-                               <a href="https://ibb.co/23STRrWf" target="_blank"><img src="https://i.ibb.co/k2JtzT5W/libro-golgota.png" class="w-full h-full object-cover rounded-xl" alt="Libro Gólgota"></a>
-                           </div>
+                           <div class="rounded-2xl overflow-hidden border border-white/10 shadow-lg aspect-[2/3] bg-black/40 p-2"><img src="https://i.ibb.co/h1c2rwDM/la-fe-no-basta-1.png" class="w-full h-full object-cover rounded-xl"></div>
+                           <div class="rounded-2xl overflow-hidden border border-white/10 shadow-lg aspect-[2/3] bg-black/40 p-2"><img src="https://i.ibb.co/8ntN4b4b/libro-espejo.png" class="w-full h-full object-cover rounded-xl"></div>
+                           <div class="rounded-2xl overflow-hidden border border-white/10 shadow-lg aspect-[2/3] bg-black/40 p-2"><img src="https://i.ibb.co/bgBBCXm9/libro-cielo.png" class="w-full h-full object-cover rounded-xl"></div>
+                           <div class="rounded-2xl overflow-hidden border border-white/10 shadow-lg aspect-[2/3] bg-black/40 p-2"><img src="https://i.ibb.co/Xxs70K0L/libro-callar.png" class="w-full h-full object-cover rounded-xl"></div>
+                           <div class="rounded-2xl overflow-hidden border border-white/10 shadow-lg aspect-[2/3] bg-black/40 p-2 sm:col-span-1 col-span-2"><img src="https://i.ibb.co/k2JtzT5W/libro-golgota.png" class="w-full h-full object-cover rounded-xl"></div>
                         </div>
                     </div>
 
-                    <!-- PIE DE PÁGINA CON LOGO DE XTRAMETRIK -->
+                    <!-- PIE DE PÁGINA -->
                     <div class="text-center pt-8 border-t border-white/10 space-y-4">
                         <p class="text-xs uppercase tracking-widest text-gray-400">Proyecto Impulsado por</p>
                         <div class="flex justify-center">
@@ -168,38 +158,54 @@
                 if (this.pasoActual < this.preguntas.length) {
                     this.renderPregunta();
                 } else {
-                    this.renderCapturaEmail();
+                    this.renderCapturaDatos();
                 }
             },
 
-            renderCapturaEmail: function() {
+            renderCapturaDatos: function() {
                 const container = document.getElementById('evaluacion-content');
                 container.innerHTML = `
-                    <div class="space-y-6 max-w-xl mx-auto">
-                        <h2 class="text-3xl font-black text-white uppercase">Diagnóstico Procesado</h2>
-                        <p class="text-gray-300">Introduce tu correo electrónico para enviarte la Guía de Restauración y el desglose de tu evaluación.</p>
-                        <input type="email" id="input-email" placeholder="tu.correo@dominio.com" class="w-full bg-black/60 border border-purple-500/30 p-5 rounded-2xl text-white placeholder-gray-500 focus:outline-none focus:border-purple-500 text-lg shadow-inner">
-                        <button onclick="App.finalizarYGuardar()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-black py-5 rounded-2xl uppercase tracking-wider shadow-lg transition-all text-lg cursor-pointer">
-                            Generar y Enviar mi Guía
+                    <div class="space-y-6 max-w-xl mx-auto text-left">
+                        <h2 class="text-3xl font-black text-white uppercase text-center">Evaluación Concluida</h2>
+                        <p class="text-gray-300 text-center">Introduce tus datos de contacto para desbloquear tu <b>Informe Profundo y Comparativo</b> en pantalla y recibir tu Guía.</p>
+                        
+                        <div class="space-y-4">
+                            <div>
+                                <label class="text-xs uppercase font-bold text-purple-400">Correo Electrónico *</label>
+                                <input type="email" id="input-email" placeholder="tu.correo@dominio.com" class="w-full mt-1 bg-black/60 border border-purple-500/30 p-4 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-purple-500 text-base">
+                            </div>
+                            <div>
+                                <label class="text-xs uppercase font-bold text-purple-400">WhatsApp (con código de país) *</label>
+                                <input type="text" id="input-whatsapp" placeholder="+58 412 0000000" class="w-full mt-1 bg-black/60 border border-purple-500/30 p-4 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-purple-500 text-base">
+                            </div>
+                        </div>
+
+                        <button onclick="App.procesarInformeYGuardar()" class="w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-black py-5 rounded-2xl uppercase tracking-wider shadow-lg transition-all text-lg cursor-pointer mt-4">
+                            Ver mi Informe Profundo y Enviar Guía
                         </button>
                     </div>
                 `;
             },
 
-            finalizarYGuardar: async function() {
-                const emailInput = document.getElementById('input-email');
-                if (!emailInput || !emailInput.value.includes('@')) {
-                    alert("Por favor, introduce un correo electrónico válido.");
+            procesarInformeYGuardar: async function() {
+                const emailInput = document.getElementById('input-email').value.trim();
+                const wppInput = document.getElementById('input-whatsapp').value.trim();
+
+                if (!emailInput || !emailInput.includes('@') || !wppInput) {
+                    alert("Por favor, introduce un correo válido y tu número de WhatsApp para continuar.");
                     return;
                 }
-                this.emailUsuario = emailInput.value.trim();
-                
-                // 1. Guardar en Supabase de forma segura
+
+                this.emailUsuario = emailInput;
+                this.whatsappUsuario = wppInput;
+
+                // 1. Guardar en Supabase
                 if (db) {
                     try {
                         await db.from('leads_cieloefata').insert([{
                             nombre: this.nombreUsuario,
                             email: this.emailUsuario,
+                            whatsapp: this.whatsappUsuario,
                             puntaje_fractura: this.puntaje,
                             estado_diagnostico: this.puntaje > 4 ? "Fractura Sistémica" : "Disonancia Cognitiva"
                         }]);
@@ -208,7 +214,7 @@
                     }
                 }
 
-                // 2. Disparar el correo mediante Google Apps Script Web App (si configuraste la URL)
+                // 2. Disparar Google Apps Script para el envío del correo de la Guía
                 if (CONFIG.appsScriptUrl && CONFIG.appsScriptUrl !== 'AQUÍ_PEGAS_TU_URL_DE_WEB_APP_APPS_SCRIPT') {
                     try {
                         fetch(CONFIG.appsScriptUrl, {
@@ -218,6 +224,7 @@
                             body: JSON.stringify({
                                 nombre: this.nombreUsuario,
                                 email: this.emailUsuario,
+                                whatsapp: this.whatsappUsuario,
                                 puntaje: this.puntaje
                             })
                         });
@@ -226,18 +233,62 @@
                     }
                 }
 
-                // Pantalla de Éxito
+                // 3. Renderizar el Informe Profundo y Comparativo en Pantalla
+                this.renderInformeFinal();
+            },
+
+            renderInformeFinal: function() {
                 const container = document.getElementById('evaluacion-content');
+                const esFractura = this.puntaje > 4;
+
                 container.innerHTML = `
-                    <div class="space-y-6 max-w-2xl mx-auto animate-fade-in">
-                        <div class="w-20 h-20 bg-emerald-500/20 border border-emerald-500 rounded-full flex items-center justify-center mx-auto text-emerald-400 text-3xl font-bold">✓</div>
-                        <h2 class="text-4xl font-black text-white uppercase">¡Guía Enviada con Éxito!</h2>
-                        <p class="text-gray-300 text-lg leading-relaxed">
-                            Hemos disparado el protocolo exegético y la Guía de Restauración hacia <span class="text-purple-300 font-bold">${this.emailUsuario}</span>. Revisa tu bandeja principal o la carpeta de spam.
-                        </p>
-                        <button onclick="location.reload()" class="bg-white/10 hover:bg-white/20 text-white px-8 py-4 rounded-xl font-bold uppercase tracking-wider transition-all cursor-pointer">
-                            Realizar Nueva Evaluación
-                        </button>
+                    <div class="space-y-10 animate-fade-in text-left">
+                        <div class="text-center space-y-3 border-b border-white/10 pb-6">
+                            <span class="px-4 py-1.5 rounded-full bg-emerald-950 text-emerald-300 border border-emerald-800 text-xs font-black tracking-widest uppercase">Informe Generado con Éxito para ${this.nombreUsuario}</span>
+                            <h2 class="text-3xl md:text-4xl font-black text-white uppercase">Informe Profundo y Comparativo</h2>
+                            <p class="text-purple-300 italic text-sm">Dr. Alejandro Sirit — Ministerio Cielo Efata & XtraMetrik</p>
+                        </div>
+
+                        <!-- 1. NEUROCIENCIA -->
+                        <div class="bg-black/40 p-6 rounded-2xl border border-white/10 space-y-2">
+                            <h3 class="text-lg font-bold text-amber-400 uppercase tracking-wide">1. Perspectiva Neurocientífica</h3>
+                            <p class="text-gray-300 text-sm leading-relaxed">
+                                ${esFractura ? 
+                                "Tus resultados indican un **secuestro amigdalino prolongado**. La corteza prefrontal ha cedido el control ante patrones de estrés autómata, lo que genera fatiga sináptica y respuestas reactivas automáticas ante la incertidumbre." : 
+                                "Muestras un nivel moderado de calibración prefrontal, aunque existen micro-desconexiones neuronales recurrentes ante los estímulos digitales y las demandas del entorno."}
+                            </p>
+                        </div>
+
+                        <!-- 2. EXÉGESIS -->
+                        <div class="bg-black/40 p-6 rounded-2xl border border-white/10 space-y-2">
+                            <h3 class="text-lg font-bold text-purple-400 uppercase tracking-wide">2. Análisis Exegético</h3>
+                            <p class="text-gray-300 text-sm leading-relaxed">
+                                Desde la exégesis de la identidad, la fractura actual refleja una división interna ("el altar del espejo"). Intentar conciliar la validación del entorno con el propósito divino genera una disonancia sistémica que agota los recursos espirituales y mentales del individuo.
+                            </p>
+                        </div>
+
+                        <!-- 3. ANTROPOLOGÍA -->
+                        <div class="bg-black/40 p-6 rounded-2xl border border-white/10 space-y-2">
+                            <h3 class="text-lg font-bold text-sky-400 uppercase tracking-wide">3. Dimensión Antropológica</h3>
+                            <p class="text-gray-300 text-sm leading-relaxed">
+                                El ser humano contemporáneo ha mutado su identidad ontológica hacia la hiperconectividad algorítmica. Antropológicamente, la pérdida de silencio y contemplación despoja al individuo de su centro, convirtiéndolo en un espectador pasivo de su propia existencia.
+                            </p>
+                        </div>
+
+                        <!-- 4. TEOLOGÍA BÍBLICA -->
+                        <div class="bg-black/40 p-6 rounded-2xl border border-white/10 space-y-2">
+                            <h3 class="text-lg font-bold text-emerald-400 uppercase tracking-wide">4. Teología Bíblica y Soberanía</h3>
+                            <p class="text-gray-300 text-sm leading-relaxed">
+                                La Escritura es categórica: <em>"No os conforméis a este siglo, sino transformaos por medio de la renovación de vuestro entendimiento"</em> (Romanos 12:2). La verdadera restauración no surge de la optimización humana, sino del sometimiento absoluto de la mente bajo la majestad y soberanía de Cristo.
+                            </p>
+                        </div>
+
+                        <div class="bg-purple-950/40 p-6 rounded-2xl border border-purple-500/30 text-center space-y-4">
+                            <p class="text-white font-bold">Hemos enviado la Guía de Restauración completa a <span class="text-purple-300">${this.emailUsuario}</span> y registrado tu WhatsApp (<span class="text-purple-300">${this.whatsappUsuario}</span>).</p>
+                            <button onclick="location.reload()" class="bg-white/10 hover:bg-white/20 text-white px-8 py-3 rounded-xl font-bold uppercase tracking-wider transition-all cursor-pointer text-sm">
+                                Realizar Nueva Evaluación
+                            </button>
+                        </div>
                     </div>
                 `;
             }
