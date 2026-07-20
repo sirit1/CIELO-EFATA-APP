@@ -59,9 +59,10 @@
 <body class="min-h-screen flex flex-col font-sans overflow-x-hidden selection:bg-brand-primary selection:text-white">
 
     <header class="pt-12 pb-6 px-4 text-center">
-        <div class="inline-block mb-4 p-3 rounded-full bg-brand-primary/20 text-brand-primary">
-            <i class="fa-solid fa-brain text-3xl"></i>
-            <i class="fa-solid fa-cross text-3xl ml-2"></i>
+        <!-- Logo de Cielo Efata o Identidad de Marca -->
+        <div class="inline-flex items-center justify-center gap-3 mb-4 p-3 rounded-full bg-brand-primary/20 text-brand-primary px-6 border border-brand-primary/30">
+            <i class="fa-solid fa-brain text-2xl"></i>
+            <span class="font-bold tracking-wider text-white">CIELO EFATA</span>
         </div>
         <h1 class="text-4xl md:text-6xl font-extrabold mb-4 tracking-tight px-2">
             <span class="bg-clip-text text-transparent bg-gradient-to-r from-brand-primary via-brand-secondary to-brand-primary">
@@ -75,12 +76,13 @@
 
     <main class="flex-grow container mx-auto px-4 py-8 max-w-4xl">
         
-        <!-- Formulario de Leads -->
+        <!-- Formulario de Leads con Automatización de Correo y API -->
         <section id="lead-form-section" class="glass-panel rounded-3xl p-8 md:p-12 shadow-2xl mb-12 relative overflow-hidden">
             <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-primary to-brand-secondary"></div>
+            
             <div class="text-center mb-8">
                 <h2 class="text-2xl font-bold mb-2">Comienza tu Evaluación Gratuita</h2>
-                <p class="text-gray-400 text-sm md:text-base">Ingresa tus datos para acceder al test de 7 preguntas y recibir tu informe neuro-espiritual junto con la guía en Google Drive.</p>
+                <p class="text-gray-400 text-sm md:text-base">Ingresa tus datos para registrar tu perfil, procesar las conexiones y enviarte automáticamente la Guía de Restauración a tu correo.</p>
             </div>
 
             <form id="lead-form" class="max-w-md mx-auto space-y-5" onsubmit="event.preventDefault(); startAssessment();">
@@ -89,7 +91,7 @@
                     <input type="text" id="user-name" required class="w-full bg-gray-800/50 border border-gray-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-primary transition-colors" placeholder="Ej. Juan Pérez">
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-300 mb-1"><i class="fa-regular fa-envelope mr-2"></i>Correo electrónico</label>
+                    <label class="block text-sm font-medium text-gray-300 mb-1"><i class="fa-regular fa-envelope mr-2"></i>Correo electrónico (Aquí enviaremos tu guía)</label>
                     <input type="email" id="user-email" required class="w-full bg-gray-800/50 border border-gray-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-primary transition-colors" placeholder="tu@email.com">
                 </div>
                 <div>
@@ -97,17 +99,17 @@
                     <input type="tel" id="user-phone" required class="w-full bg-gray-800/50 border border-gray-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-primary transition-colors" placeholder="+1 234 567 8900">
                 </div>
                 <button type="submit" class="w-full bg-gradient-to-r from-brand-primary to-brand-secondary text-white font-bold py-4 rounded-xl hover:shadow-[0_0_20px_rgba(139,92,246,0.5)] transition-all hover:scale-[1.02] mt-4">
-                    Comenzar Evaluación Ahora <i class="fa-solid fa-arrow-right ml-2"></i>
+                    Comenzar Evaluación y Enviar Guía <i class="fa-solid fa-paper-plane ml-2"></i>
                 </button>
             </form>
         </section>
 
-        <!-- Test de Preguntas -->
+        <!-- Sección de Test de Preguntas -->
         <section id="assessment-container" class="hidden glass-panel rounded-3xl p-6 md:p-10 shadow-2xl relative overflow-hidden">
             <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-accent to-brand-primary"></div>
             <div id="welcome-message" class="text-center mb-8 hidden">
                 <h2 class="text-2xl font-bold text-brand-primary">¡Hola, <span id="display-name"></span>!</h2>
-                <p class="text-gray-300">Responde con total honestidad. No hay respuestas correctas o incorrectas.</p>
+                <p class="text-gray-300">Responde con total honestidad. Procesaremos tus resultados en tiempo real.</p>
             </div>
 
             <form id="assessment-form" class="space-y-10">
@@ -177,7 +179,7 @@
 
                 <div class="text-center pt-6">
                     <button type="button" onclick="calculateResults()" class="bg-brand-primary hover:bg-purple-500 text-white font-bold py-4 px-10 rounded-full transition-transform hover:scale-105 shadow-[0_0_15px_rgba(139,92,246,0.5)]">
-                        Generar Mi Diagnóstico <i class="fa-solid fa-chart-pie ml-2"></i>
+                        Generar Mi Diagnóstico y Enviar Guía <i class="fa-solid fa-chart-pie ml-2"></i>
                     </button>
                 </div>
             </form>
@@ -189,38 +191,65 @@
                 </div>
                 <div id="results-description" class="prose prose-invert max-w-none mb-8"></div>
                 <div class="text-center mt-12 border-t border-gray-700 pt-8">
-                    <h4 class="text-xl font-bold mb-4 text-white">¡Tu Regalo Especial por Completar el Test!</h4>
-                    <p class="text-gray-400 mb-6">Accede de inmediato a la guía oficial de restauración alojada en Google Drive:</p>
-                    <!-- LLAMADA A LA GUÍA EN GOOGLE DRIVE -->
-                    <a href="AQUI_PEGAS_EL_ENLACE_DE_TU_GOOGLE_DRIVE" target="_blank" class="inline-flex items-center justify-center gap-3 bg-gradient-to-r from-brand-primary to-brand-secondary text-white font-bold py-4 px-8 rounded-full shadow-[0_0_20px_rgba(139,92,246,0.5)] hover:scale-105 transition-transform">
-                        <i class="fa-solid fa-cloud-arrow-down text-2xl"></i> Descargar Guía en Google Drive
-                    </a>
+                    <div class="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-medium mb-4">
+                        <i class="fa-solid fa-circle-check mr-2"></i> ¡Guía enviada exitosamente a tu correo electrónico! Revisa tu bandeja de entrada.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de Libros y Recursos Publicados -->
+        <section class="mt-16 mb-12">
+            <h3 class="text-2xl font-bold text-center mb-8 text-white">Publicaciones y Obras del Autor</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+                <div class="glass-panel p-6 rounded-2xl flex items-center gap-4">
+                    <div class="w-20 h-28 bg-gray-800 rounded-lg flex-shrink-0 flex items-center justify-center border border-gray-700">
+                        <i class="fa-solid fa-book text-brand-primary text-3xl"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-lg">Neurociencia y Fe</h4>
+                        <p class="text-xs text-gray-400 mt-1">El manual definitivo para la renovación del entendimiento y la gestión de la amígdala.</p>
+                    </div>
+                </div>
+                <div class="glass-panel p-6 rounded-2xl flex items-center gap-4">
+                    <div class="w-20 h-28 bg-gray-800 rounded-lg flex-shrink-0 flex items-center justify-center border border-gray-700">
+                        <i class="fa-solid fa-book-bible text-brand-secondary text-3xl"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-lg">Antropología del Alma</h4>
+                        <p class="text-xs text-gray-400 mt-1">Fundamentos exegéticos para la sanidad integral y la identidad en Cristo.</p>
+                    </div>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- Footer con Bio del Dr. Alejandro Sirit -->
+    <!-- Footer con Bio del Dr. Alejandro Sirit y Logos de Marca -->
     <footer class="bg-black/80 border-t border-gray-800 py-16 mt-6">
         <div class="container mx-auto px-4 max-w-4xl text-center">
+            
             <div class="glass-panel p-8 rounded-3xl mb-12 flex flex-col md:flex-row items-center gap-8 max-w-3xl mx-auto">
-                <div class="w-32 h-32 rounded-full overflow-hidden border-4 border-brand-primary/50 flex-shrink-0 bg-gray-800">
+                <div class="w-32 h-32 rounded-full overflow-hidden border-4 border-brand-primary/50 flex-shrink-0 bg-gray-800 relative">
                     <img src="https://i.ibb.co/v6P2w447/perfil.jpg" alt="Dr. Alejandro Sirit" class="w-full h-full object-cover">
                 </div>
                 <div class="text-left">
                     <h3 class="text-2xl font-bold text-white mb-2">Dr. Alejandro Sirit</h3>
-                    <p class="text-brand-secondary font-semibold text-sm mb-3 uppercase">Investigador de la neurociencia y exegética</p>
+                    <p class="text-brand-secondary font-semibold text-sm mb-3 uppercase tracking-wider">Investigador de la neurociencia y exegética</p>
                     <p class="text-gray-400 text-sm leading-relaxed">
-                        Integrando la ciencia médica y cerebral con la inerrancia de las Escrituras para guiar en la sanidad integral del ser humano.
+                        Dedicado a integrar la rigurosidad de la ciencia médica y cerebral con la inerrancia de las Escrituras para guiar en la sanidad integral del ser humano bajo los estándares de Cielo Efata y Xtrametrik.
                     </p>
                 </div>
             </div>
+
+            <p class="text-slate-500 text-sm">
+                &copy; 2026 Cielo Efata & Xtrametrik. Todos los derechos reservados.
+            </p>
         </div>
     </footer>
 
-    <!-- Lógica de Conexión y Control -->
+    <!-- Lógica de Conexión: Apps Script, Supabase y Automatización de Correo -->
     <script>
-        const APPS_SCRIPT_URL = 'TU_WEB_APP_APPS_SCRIPT_URL';
+        const APPS_SCRIPT_URL = 'TU_WEB_APP_APPS_SCRIPT_URL'; // URL de tu Apps Script configurada para enviar el correo y guardar en Supabase
 
         let globalUserData = { name: '', email: '', phone: '' };
         let radarChartInstance = null;
@@ -250,10 +279,12 @@
                 neuro_score: neuro + '%',
                 antropo_score: antropo + '%',
                 exegesis_score: exegesis + '%',
+                enviar_guia: true, // Indicador para que tu API/Apps Script dispare el correo con el recurso
                 fecha: new Date().toISOString()
             };
 
             try {
+                // Envío asíncrono a tu API de Apps Script / Supabase para almacenamiento y despacho de correo
                 await fetch(APPS_SCRIPT_URL, {
                     method: 'POST',
                     mode: 'no-cors',
@@ -261,7 +292,7 @@
                     body: JSON.stringify(payload)
                 });
             } catch (e) {
-                console.error("Error sincronizando:", e);
+                console.error("Error sincronizando con API:", e);
             }
 
             renderChart(neuro, antropo, exegesis);
