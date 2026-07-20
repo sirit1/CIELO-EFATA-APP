@@ -1,19 +1,30 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <title>Cielo Efata</title>
-    <!-- Ruta corregida: style.css está en la raíz -->
-    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background-color: #0f172a;
+            color: white;
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        h1 {
+            font-size: 2.5rem;
+            border-right: 2px solid white;
+            white-space: nowrap;
+            animation: blink 0.75s step-end infinite;
+        }
+    </style>
 </head>
-
 <body>
-    <!-- Este div es el ÚNICO lugar donde debe inyectarse tu app -->
-    <div id="app"></div>
-
-    <!-- Ruta corregida: app.js está en la carpeta js -->
-    <script src="js/app.js"></script>
+    <div id="app">
+        <h1 style="color: white;">¡SISTEMA CARGADO CORRECTAMENTE!</h1>
+    </div>
 </body>
-
 </html>
