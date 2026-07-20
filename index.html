@@ -1,57 +1,213 @@
-<div style="font-family: Arial, sans-serif; text-align: center; color: #333333; max-width: 600px; margin: 0 auto; padding: 20px;">
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ministerio Cielo Efata - Evaluación Neuroexegética</title>
+    <!-- Tailwind CSS para el diseño moderno -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- SDK de Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body class="bg-[#090d16] text-white min-p-0 m-0">
 
-    <!-- ENCABEZADO -->
-    <h1 style="font-size: 26px; color: #1a365d; margin-bottom: 5px; font-weight: bold;">MINISTERIO CIELO EFFATA</h1>
-    <hr style="border: none; border-top: 2px solid #3182ce; width: 60px; margin: 10px auto 25px auto;">
-
-    <!-- IMAGEN DE PERFIL ACTUALIZADA -->
-    <div style="margin-bottom: 25px;">
-        <a href="https://ibb.co/8nbkQ2Q0" target="_blank">
-            <img src="https://i.ibb.co/qLC6292d/perfil-lkin.png" alt="Perfil" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 3px solid #3182ce;" border="0">
-        </a>
+    <div id="app" class="py-12 px-4">
+        <!-- El contenido dinámico se inyectará aquí automáticamente -->
     </div>
 
-    <!-- PORTADAS DE LIBROS -->
-    <div style="margin: 20px 0;">
-        <p style="font-size: 16px; font-weight: bold; color: #2d3748; margin-bottom: 15px;">Nuestras Publicaciones</p>
-        
-        <div style="margin-bottom: 15px;">
-            <a href="https://ibb.co/rf35qN4t" target="_blank">
-                <img src="https://i.ibb.co/h1c2rwDM/la-fe-no-basta-1.png" alt="La fe no basta" style="max-width: 180px; height: auto; border-radius: 4px; box-shadow: 0px 4px 6px rgba(0,0,0,0.1);" border="0">
-            </a>
-        </div>
+    <script>
+        /**
+         * ARQUITECTURA CIELO EFATA - Motor Frontend & Supabase
+         */
+        const CONFIG = {
+            supabaseUrl: 'https://xzjoruazhlwmaebnqqbv.supabase.co',
+            supabaseKey: 'sb_publishable_AVcvj1Bq_uD7sYhbJZeHWA_NobPbVVF'
+        };
 
-        <div style="margin-bottom: 15px;">
-            <a href="https://ibb.co/xKdX8Y8Y" target="_blank">
-                <img src="https://i.ibb.co/8ntN4b4b/libro-espejo.png" alt="Libro espejo" style="max-width: 180px; height: auto; border-radius: 4px; box-shadow: 0px 4px 6px rgba(0,0,0,0.1);" border="0">
-            </a>
-        </div>
+        let db = null;
+        try {
+            if (window.supabase) {
+                db = window.supabase.createClient(CONFIG.supabaseUrl, CONFIG.supabaseKey);
+            }
+        } catch (e) {
+            console.warn("Modo offline activado.");
+        }
 
-        <div style="margin-bottom: 15px;">
-            <a href="https://ibb.co/5W88SL4H" target="_blank">
-                <img src="https://i.ibb.co/bgBBCXm9/libro-cielo.png" alt="Libro cielo" style="max-width: 180px; height: auto; border-radius: 4px; box-shadow: 0px 4px 6px rgba(0,0,0,0.1);" border="0">
-            </a>
-        </div>
+        const App = {
+            el: document.getElementById('app'),
+            pasoActual: 0,
+            puntaje: 0,
+            nombreUsuario: '',
+            emailUsuario: '',
+            preguntas: [
+                "¿Sientes que tus reacciones ante el estrés son automáticas?",
+                "¿Hay desconexión entre tus valores y tus decisiones diarias?",
+                "¿Te sientes atrapado en pensamientos que no te pertenecen?",
+                "¿El miedo determina tu toma de decisiones?",
+                "¿Tu identidad está fragmentada por el entorno digital?",
+                "¿Buscas validación externa para sentirte en paz?",
+                "¿Reconoces la necesidad de una restauración profunda?"
+            ],
 
-        <div style="margin-bottom: 25px;">
-            <a href="https://ibb.co/m5q9Z2ZT" target="_blank">
-                <img src="https://i.ibb.co/Xxs70K0L/libro-callar.png" alt="Libro callar" style="max-width: 180px; height: auto; border-radius: 4px; box-shadow: 0px 4px 6px rgba(0,0,0,0.1);" border="0">
-            </a>
-        </div>
-        
-        <div style="margin-bottom: 25px;">
-            <a href="https://ibb.co/23STRrWf" target="_blank">
-                <img src="https://i.ibb.co/k2JtzT5W/libro-golgota.png" alt="Libro golgota" style="max-width: 180px; height: auto; border-radius: 4px; box-shadow: 0px 4px 6px rgba(0,0,0,0.1);" border="0">
-            </a>
-        </div>
-    </div>
+            render: function() {
+                if (!this.el) return;
+                this.el.innerHTML = `
+                    <section class="max-w-5xl mx-auto space-y-16 font-sans">
+                        <!-- ENCABEZADO -->
+                        <div class="text-center space-y-4">
+                            <span class="px-4 py-1.5 rounded-full bg-purple-950/80 text-purple-300 border border-purple-800 text-xs font-black tracking-widest uppercase">Ministerio Cielo Efata</span>
+                            <h1 class="text-4xl md:text-6xl font-black text-white uppercase tracking-tighter">¿Tus emociones te controlan?</h1>
+                            <p class="text-base md:text-xl text-purple-200/80 max-w-2xl mx-auto italic">La encrucijada crítica entre tu neurobiología y tu diseño divino original.</p>
+                        </div>
 
-    <!-- LOGOTIPO XTRAMETRIK AL FINAL -->
-    <div style="margin-top: 30px; border-top: 1px solid #e2e8f0; padding-top: 20px;">
-        <p style="font-size: 12px; color: #718096; margin-bottom: 10px;">Potenciado por</p>
-        <a href="https://ibb.co/jZBjbdb2" target="_blank">
-            <img src="https://i.ibb.co/5xtJGdGy/xtrametrik-black-blue.jpg" alt="Xtrametrik" style="max-width: 140px; height: auto;" border="0">
-        </a>
-    </div>
+                        <!-- CONTENEDOR DE LA EVALUACIÓN -->
+                        <div id="evaluacion-container" class="bg-gradient-to-br from-[#0f172a] via-[#111827] to-black p-8 md:p-12 rounded-[2.5rem] border border-purple-500/20 shadow-2xl text-center">
+                            <div id="evaluacion-content" class="space-y-6">
+                                <div class="max-w-xl mx-auto space-y-6">
+                                    <input type="text" id="input-nombre" placeholder="Escribe tu nombre completo..." class="w-full bg-black/60 border border-purple-500/30 p-5 rounded-2xl text-white placeholder-gray-500 focus:outline-none focus:border-purple-500 text-lg shadow-inner">
+                                    <button id="start-btn" class="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-black py-5 rounded-2xl tracking-wider uppercase shadow-[0_0_30px_rgba(147,51,234,0.4)] transition-all text-lg">
+                                        Iniciar Evaluación Profesional
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
 
-</div>
+                        <!-- SECCIÓN DE CREDENCIALES Y AUTORIDAD -->
+                        <div class="grid md:grid-cols-3 gap-8 items-center bg-gradient-to-br from-[#0a0f1d] to-black p-8 md:p-10 rounded-[2.5rem] border border-white/10">
+                            <div class="flex justify-center">
+                                <a href="https://ibb.co/8nbkQ2Q0" target="_blank">
+                                    <img src="https://i.ibb.co/qLC6292d/perfil-lkin.png" class="w-48 h-48 rounded-2xl border-2 border-purple-500 shadow-2xl object-cover" alt="Dr. Alejandro Sirit">
+                                </a>
+                            </div>
+                            <div class="md:col-span-2 space-y-4 text-left">
+                                <h3 class="text-3xl font-extrabold text-white">Dr. Alejandro Sirit</h3>
+                                <p class="text-xs text-amber-400 font-bold uppercase tracking-widest">Doctor Honoris Causa (Centro UNESCO) | IBM Data Scientist and Data Analytics IBM Certified</p>
+                                <p class="text-gray-300 text-sm leading-relaxed">
+                                    Más de 30 años de trayectoria integrando la neurociencia, la exégesis y la gobernanza ética de la Inteligencia Artificial. Impulsado por XtraMetrik.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- VITRINA DE OBRAS CON ENLACES CORREGIDOS -->
+                        <div class="space-y-6 text-center">
+                            <h3 class="text-xs font-bold uppercase tracking-[0.3em] text-purple-400">Obras Exegéticas del Autor</h3>
+                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-6">
+                               <div class="rounded-2xl overflow-hidden border border-white/10 shadow-lg aspect-[2/3] bg-black/40 p-2">
+                                   <a href="https://ibb.co/rf35qN4t" target="_blank"><img src="https://i.ibb.co/h1c2rwDM/la-fe-no-basta-1.png" class="w-full h-full object-cover rounded-xl" alt="La fe no basta"></a>
+                               </div>
+                               <div class="rounded-2xl overflow-hidden border border-white/10 shadow-lg aspect-[2/3] bg-black/40 p-2">
+                                   <a href="https://ibb.co/xKdX8Y8Y" target="_blank"><img src="https://i.ibb.co/8ntN4b4b/libro-espejo.png" class="w-full h-full object-cover rounded-xl" alt="Libro espejo"></a>
+                               </div>
+                               <div class="rounded-2xl overflow-hidden border border-white/10 shadow-lg aspect-[2/3] bg-black/40 p-2">
+                                   <a href="https://ibb.co/5W88SL4H" target="_blank"><img src="https://i.ibb.co/bgBBCXm9/libro-cielo.png" class="w-full h-full object-cover rounded-xl" alt="Libro cielo"></a>
+                               </div>
+                               <div class="rounded-2xl overflow-hidden border border-white/10 shadow-lg aspect-[2/3] bg-black/40 p-2">
+                                   <a href="https://ibb.co/m5q9Z2ZT" target="_blank"><img src="https://i.ibb.co/Xxs70K0L/libro-callar.png" class="w-full h-full object-cover rounded-xl" alt="Libro callar"></a>
+                               </div>
+                            </div>
+                        </div>
+                    </section>
+                `;
+                document.getElementById('start-btn').addEventListener('click', () => this.validarInicio());
+            },
+
+            validarInicio: function() {
+                const input = document.getElementById('input-nombre');
+                if (!input || !input.value.trim()) {
+                    alert("Por favor, introduce tu nombre completo.");
+                    return;
+                }
+                this.nombreUsuario = input.value.trim();
+                this.pasoActual = 0;
+                this.puntaje = 0;
+                this.renderPregunta();
+            },
+
+            renderPregunta: function() {
+                const container = document.getElementById('evaluacion-content');
+                const q = this.preguntas[this.pasoActual];
+                const progress = Math.round(((this.pasoActual + 1) / this.preguntas.length) * 100);
+
+                container.innerHTML = `
+                    <div class="space-y-6 max-w-xl mx-auto">
+                        <div class="flex justify-between text-xs font-bold text-purple-400 uppercase tracking-widest">
+                            <span>Pregunta ${this.pasoActual + 1} de ${this.preguntas.length}</span>
+                            <span>${progress}%</span>
+                        </div>
+                        <div class="w-full h-2 bg-black/60 rounded-full overflow-hidden">
+                            <div class="h-full bg-purple-600 transition-all duration-300" style="width: ${progress}%"></div>
+                        </div>
+                        <h2 class="text-2xl md:text-3xl font-extrabold text-white leading-snug">${q}</h2>
+                        <div class="grid grid-cols-2 gap-4 pt-4">
+                            <button onclick="App.responder(true)" class="p-5 rounded-2xl bg-purple-900/40 border border-purple-500/40 hover:bg-purple-800 text-white font-bold text-lg uppercase transition-all cursor-pointer">Sí / Casi siempre</button>
+                            <button onclick="App.responder(false)" class="p-5 rounded-2xl bg-black/40 border border-white/10 hover:bg-gray-800 text-gray-300 font-bold text-lg uppercase transition-all cursor-pointer">No / Rara vez</button>
+                        </div>
+                    </div>
+                `;
+            },
+
+            responder: function(esSi) {
+                if (esSi) this.puntaje++;
+                this.pasoActual++;
+                if (this.pasoActual < this.preguntas.length) {
+                    this.renderPregunta();
+                } else {
+                    this.renderCapturaEmail();
+                }
+            },
+
+            renderCapturaEmail: function() {
+                const container = document.getElementById('evaluacion-content');
+                container.innerHTML = `
+                    <div class="space-y-6 max-w-xl mx-auto">
+                        <h2 class="text-3xl font-black text-white uppercase">Diagnóstico Procesado</h2>
+                        <p class="text-gray-300">Introduce tu correo electrónico para enviarte el desglose exegético detallado y tu Guía de Restauración.</p>
+                        <input type="email" id="input-email" placeholder="tu.correo@dominio.com" class="w-full bg-black/60 border border-purple-500/30 p-5 rounded-2xl text-white placeholder-gray-500 focus:outline-none focus:border-purple-500 text-lg shadow-inner">
+                        <button onclick="App.finalizarYGuardar()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-black py-5 rounded-2xl uppercase tracking-wider shadow-lg transition-all text-lg cursor-pointer">
+                            Generar y Enviar mi Diagnóstico
+                        </button>
+                    </div>
+                `;
+            },
+
+            finalizarYGuardar: async function() {
+                const emailInput = document.getElementById('input-email');
+                if (!emailInput || !emailInput.value.includes('@')) {
+                    alert("Por favor, introduce un correo electrónico válido.");
+                    return;
+                }
+                this.emailUsuario = emailInput.value.trim();
+                
+                if (db) {
+                    try {
+                        await db.from('leads_cieloefata').insert([{
+                            nombre: this.nombreUsuario,
+                            email: this.emailUsuario,
+                            puntaje_fractura: this.puntaje,
+                            estado_diagnostico: this.puntaje > 4 ? "Fractura Sistémica" : "Disonancia Cognitiva"
+                        }]);
+                    } catch (err) {
+                        console.error("Error al registrar lead:", err);
+                    }
+                }
+
+                const container = document.getElementById('evaluacion-content');
+                container.innerHTML = `
+                    <div class="space-y-6 max-w-2xl mx-auto animate-fade-in">
+                        <div class="w-20 h-20 bg-emerald-500/20 border border-emerald-500 rounded-full flex items-center justify-center mx-auto text-emerald-400 text-3xl font-bold">✓</div>
+                        <h2 class="text-4xl font-black text-white uppercase">¡Evaluación Completada con Éxito!</h2>
+                        <p class="text-gray-300 text-lg leading-relaxed">
+                            Hemos enviado el protocolo completo y la Guía de Restauración a <span class="text-purple-300 font-bold">${this.emailUsuario}</span>. Revisa tu bandeja de entrada.
+                        </p>
+                        <button onclick="location.reload()" class="bg-white/10 hover:bg-white/20 text-white px-8 py-4 rounded-xl font-bold uppercase tracking-wider transition-all cursor-pointer">
+                            Realizar Nueva Evaluación
+                        </button>
+                    </div>
+                `;
+            }
+        };
+
+        window.onload = () => App.render();
+    </script>
+</body>
+</html>
