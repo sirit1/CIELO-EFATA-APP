@@ -1,330 +1,57 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mente y Espíritu | Cielo Efata</title>
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Chart.js para el gráfico de radar -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Supabase Client -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <!-- FontAwesome para íconos -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: { sans: ['Inter', 'sans-serif'] },
-                    colors: {
-                        brand: {
-                            dark: '#0B0F19',
-                            primary: '#8B5CF6',
-                            secondary: '#EC4899',
-                            accent: '#3B82F6'
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-    
-    <style>
-        body {
-            background-color: #0B0F19;
-            color: #F3F4F6;
-            background-image: 
-                radial-gradient(circle at 15% 50%, rgba(139, 92, 246, 0.15), transparent 25%),
-                radial-gradient(circle at 85% 30%, rgba(236, 72, 153, 0.15), transparent 25%);
-            background-attachment: fixed;
-        }
-        .glass-panel {
-            background: rgba(17, 24, 39, 0.7);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        .custom-radio input:checked + div {
-            background-color: #8B5CF6;
-            border-color: #8B5CF6;
-            box-shadow: 0 0 15px rgba(139, 92, 246, 0.5);
-        }
-    </style>
-</head>
-<body class="min-h-screen flex flex-col font-sans overflow-x-hidden selection:bg-brand-primary selection:text-white">
+<div style="font-family: Arial, sans-serif; text-align: center; color: #333333; max-width: 600px; margin: 0 auto; padding: 20px;">
 
-    <header class="pt-12 pb-6 px-4 text-center">
-        <!-- Logo de Cielo Efata o Identidad de Marca -->
-        <div class="inline-flex items-center justify-center gap-3 mb-4 p-3 rounded-full bg-brand-primary/20 text-brand-primary px-6 border border-brand-primary/30">
-            <i class="fa-solid fa-brain text-2xl"></i>
-            <span class="font-bold tracking-wider text-white">CIELO EFATA</span>
-        </div>
-        <h1 class="text-4xl md:text-6xl font-extrabold mb-4 tracking-tight px-2">
-            <span class="bg-clip-text text-transparent bg-gradient-to-r from-brand-primary via-brand-secondary to-brand-primary">
-                Diseñados para la Restauración
-            </span>
-        </h1>
-        <p class="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto font-light px-4">
-            Descubre cómo la neurociencia, tu diseño antropológico y la verdad revelada en las Escrituras se unen para transformar tu gestión emocional. Rinde tu mente al diseño original del Creador.
-        </p>
-    </header>
+    <!-- ENCABEZADO -->
+    <h1 style="font-size: 26px; color: #1a365d; margin-bottom: 5px; font-weight: bold;">MINISTERIO CIELO EFFATA</h1>
+    <hr style="border: none; border-top: 2px solid #3182ce; width: 60px; margin: 10px auto 25px auto;">
 
-    <main class="flex-grow container mx-auto px-4 py-8 max-w-4xl">
+    <!-- IMAGEN DE PERFIL ACTUALIZADA -->
+    <div style="margin-bottom: 25px;">
+        <a href="https://ibb.co/8nbkQ2Q0" target="_blank">
+            <img src="https://i.ibb.co/qLC6292d/perfil-lkin.png" alt="Perfil" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 3px solid #3182ce;" border="0">
+        </a>
+    </div>
+
+    <!-- PORTADAS DE LIBROS -->
+    <div style="margin: 20px 0;">
+        <p style="font-size: 16px; font-weight: bold; color: #2d3748; margin-bottom: 15px;">Nuestras Publicaciones</p>
         
-        <!-- Formulario de Leads con Automatización de Correo y API -->
-        <section id="lead-form-section" class="glass-panel rounded-3xl p-8 md:p-12 shadow-2xl mb-12 relative overflow-hidden">
-            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-primary to-brand-secondary"></div>
-            
-            <div class="text-center mb-8">
-                <h2 class="text-2xl font-bold mb-2">Comienza tu Evaluación Gratuita</h2>
-                <p class="text-gray-400 text-sm md:text-base">Ingresa tus datos para registrar tu perfil, procesar las conexiones y enviarte automáticamente la Guía de Restauración a tu correo.</p>
-            </div>
-
-            <form id="lead-form" class="max-w-md mx-auto space-y-5" onsubmit="event.preventDefault(); startAssessment();">
-                <div>
-                    <label class="block text-sm font-medium text-gray-300 mb-1"><i class="fa-regular fa-user mr-2"></i>Nombre completo</label>
-                    <input type="text" id="user-name" required class="w-full bg-gray-800/50 border border-gray-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-primary transition-colors" placeholder="Ej. Juan Pérez">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-300 mb-1"><i class="fa-regular fa-envelope mr-2"></i>Correo electrónico (Aquí enviaremos tu guía)</label>
-                    <input type="email" id="user-email" required class="w-full bg-gray-800/50 border border-gray-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-primary transition-colors" placeholder="tu@email.com">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-300 mb-1"><i class="fa-brands fa-whatsapp mr-2"></i>Número de WhatsApp</label>
-                    <input type="tel" id="user-phone" required class="w-full bg-gray-800/50 border border-gray-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-primary transition-colors" placeholder="+1 234 567 8900">
-                </div>
-                <button type="submit" class="w-full bg-gradient-to-r from-brand-primary to-brand-secondary text-white font-bold py-4 rounded-xl hover:shadow-[0_0_20px_rgba(139,92,246,0.5)] transition-all hover:scale-[1.02] mt-4">
-                    Comenzar Evaluación y Enviar Guía <i class="fa-solid fa-paper-plane ml-2"></i>
-                </button>
-            </form>
-        </section>
-
-        <!-- Sección de Test de Preguntas -->
-        <section id="assessment-container" class="hidden glass-panel rounded-3xl p-6 md:p-10 shadow-2xl relative overflow-hidden">
-            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-accent to-brand-primary"></div>
-            <div id="welcome-message" class="text-center mb-8 hidden">
-                <h2 class="text-2xl font-bold text-brand-primary">¡Hola, <span id="display-name"></span>!</h2>
-                <p class="text-gray-300">Responde con total honestidad. Procesaremos tus resultados en tiempo real.</p>
-            </div>
-
-            <form id="assessment-form" class="space-y-10">
-                <!-- Pregunta 1 -->
-                <div class="question-block border-b border-gray-800 pb-8">
-                    <h3 class="text-lg font-semibold mb-4 text-white"><span class="text-brand-primary mr-2">1.</span> Cuando enfrentas una situación de alto estrés o conflicto repentino, tu primera reacción suele ser:</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-                        <label class="custom-radio cursor-pointer relative"><input type="radio" name="q1" value="amigdala" class="peer sr-only" required><div class="p-4 rounded-xl border border-gray-700 bg-gray-800/30 peer-hover:bg-gray-700/50 transition-all text-sm h-full flex items-center">Explosiva, impulsiva o de pánico total.</div></label>
-                        <label class="custom-radio cursor-pointer relative"><input type="radio" name="q1" value="bloqueo" class="peer sr-only"><div class="p-4 rounded-xl border border-gray-700 bg-gray-800/30 peer-hover:bg-gray-700/50 transition-all text-sm h-full flex items-center">Parálisis mental; me quedo en blanco.</div></label>
-                        <label class="custom-radio cursor-pointer relative"><input type="radio" name="q1" value="corteza" class="peer sr-only"><div class="p-4 rounded-xl border border-gray-700 bg-gray-800/30 peer-hover:bg-gray-700/50 transition-all text-sm h-full flex items-center">Logro pausar, respirar y buscar solución lógica.</div></label>
-                    </div>
-                </div>
-                <!-- Pregunta 2 -->
-                <div class="question-block border-b border-gray-800 pb-8">
-                    <h3 class="text-lg font-semibold mb-4 text-white"><span class="text-brand-primary mr-2">2.</span> Si cometes un error grave en tu vida personal o laboral, ¿qué narrativa predomina?</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-                        <label class="custom-radio cursor-pointer relative"><input type="radio" name="q2" value="condenacion" class="peer sr-only" required><div class="p-4 rounded-xl border border-gray-700 bg-gray-800/30 peer-hover:bg-gray-700/50 transition-all text-sm h-full flex items-center">"Soy un fracaso, Dios está decepcionado."</div></label>
-                        <label class="custom-radio cursor-pointer relative"><input type="radio" name="q2" value="justificacion" class="peer sr-only"><div class="p-4 rounded-xl border border-gray-700 bg-gray-800/30 peer-hover:bg-gray-700/50 transition-all text-sm h-full flex items-center">Culpo a mi pasado, genética u otros.</div></label>
-                        <label class="custom-radio cursor-pointer relative"><input type="radio" name="q2" value="redencion" class="peer sr-only"><div class="p-4 rounded-xl border border-gray-700 bg-gray-800/30 peer-hover:bg-gray-700/50 transition-all text-sm h-full flex items-center">Voy al arrepentimiento seguro en Cristo.</div></label>
-                    </div>
-                </div>
-                <!-- Pregunta 3 -->
-                <div class="question-block border-b border-gray-800 pb-8">
-                    <h3 class="text-lg font-semibold mb-4 text-white"><span class="text-brand-primary mr-2">3.</span> Cuando experimentas tristeza profunda o ansiedad prolongada:</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-                        <label class="custom-radio cursor-pointer relative"><input type="radio" name="q3" value="emocion_reina" class="peer sr-only" required><div class="p-4 rounded-xl border border-gray-700 bg-gray-800/30 peer-hover:bg-gray-700/50 transition-all text-sm h-full flex items-center">Dejo que la emoción dicte la verdad.</div></label>
-                        <label class="custom-radio cursor-pointer relative"><input type="radio" name="q3" value="supresion" class="peer sr-only"><div class="p-4 rounded-xl border border-gray-700 bg-gray-800/30 peer-hover:bg-gray-700/50 transition-all text-sm h-full flex items-center">Ignoro la emoción (positivismo tóxico).</div></label>
-                        <label class="custom-radio cursor-pointer relative"><input type="radio" name="q3" value="exegesis" class="peer sr-only"><div class="p-4 rounded-xl border border-gray-700 bg-gray-800/30 peer-hover:bg-gray-700/50 transition-all text-sm h-full flex items-center">Cuestiono la emoción a la luz de la Escritura.</div></label>
-                    </div>
-                </div>
-                <!-- Pregunta 4 -->
-                <div class="question-block border-b border-gray-800 pb-8">
-                    <h3 class="text-lg font-semibold mb-4 text-white"><span class="text-brand-primary mr-2">4.</span> ¿Cómo percibes tu cuerpo y procesos biológicos frente a tu espiritualidad?</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-                        <label class="custom-radio cursor-pointer relative"><input type="radio" name="q4" value="desconexion" class="peer sr-only" required><div class="p-4 rounded-xl border border-gray-700 bg-gray-800/30 peer-hover:bg-gray-700/50 transition-all text-sm h-full flex items-center">El cuerpo no importa, solo lo espiritual.</div></label>
-                        <label class="custom-radio cursor-pointer relative"><input type="radio" name="q4" value="determinismo" class="peer sr-only"><div class="p-4 rounded-xl border border-gray-700 bg-gray-800/30 peer-hover:bg-gray-700/50 transition-all text-sm h-full flex items-center">Mi diagnóstico o genética dictan quién soy.</div></label>
-                        <label class="custom-radio cursor-pointer relative"><input type="radio" name="q4" value="integracion" class="peer sr-only"><div class="p-4 rounded-xl border border-gray-700 bg-gray-800/30 peer-hover:bg-gray-700/50 transition-all text-sm h-full flex items-center">Integro biología, medicina y disciplina espiritual.</div></label>
-                    </div>
-                </div>
-                <!-- Pregunta 5 -->
-                <div class="question-block border-b border-gray-800 pb-8">
-                    <h3 class="text-lg font-semibold mb-4 text-white"><span class="text-brand-primary mr-2">5.</span> Cuando detectas un patrón de pensamiento negativo recurrente:</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-                        <label class="custom-radio cursor-pointer relative"><input type="radio" name="q5" value="rumiacion" class="peer sr-only" required><div class="p-4 rounded-xl border border-gray-700 bg-gray-800/30 peer-hover:bg-gray-700/50 transition-all text-sm h-full flex items-center">Me hundo en él (rumiación constante).</div></label>
-                        <label class="custom-radio cursor-pointer relative"><input type="radio" name="q5" value="distraccion" class="peer sr-only"><div class="p-4 rounded-xl border border-gray-700 bg-gray-800/30 peer-hover:bg-gray-700/50 transition-all text-sm h-full flex items-center">Intento distraerme con redes o trabajo.</div></label>
-                        <label class="custom-radio cursor-pointer relative"><input type="radio" name="q5" value="renovacion" class="peer sr-only"><div class="p-4 rounded-xl border border-gray-700 bg-gray-800/30 peer-hover:bg-gray-700/50 transition-all text-sm h-full flex items-center">Llevo el pensamiento cautivo a la Palabra.</div></label>
-                    </div>
-                </div>
-                <!-- Pregunta 6 -->
-                <div class="question-block border-b border-gray-800 pb-8">
-                    <h3 class="text-lg font-semibold mb-4 text-white"><span class="text-brand-primary mr-2">6.</span> Cuando alguien te ofende profundamente:</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-                        <label class="custom-radio cursor-pointer relative"><input type="radio" name="q6" value="venganza" class="peer sr-only" required><div class="p-4 rounded-xl border border-gray-700 bg-gray-800/30 peer-hover:bg-gray-700/50 transition-all text-sm h-full flex items-center">Guardo rencor y busqué compensación.</div></label>
-                        <label class="custom-radio cursor-pointer relative"><input type="radio" name="q6" value="aislamiento" class="peer sr-only"><div class="p-4 rounded-xl border border-gray-700 bg-gray-800/30 peer-hover:bg-gray-700/50 transition-all text-sm h-full flex items-center">Corto la relación inmediatamente.</div></label>
-                        <label class="custom-radio cursor-pointer relative"><input type="radio" name="q6" value="perdon" class="peer sr-only"><div class="p-4 rounded-xl border border-gray-700 bg-gray-800/30 peer-hover:bg-gray-700/50 transition-all text-sm h-full flex items-center">Pongo límites sanos y decido perdonar.</div></label>
-                    </div>
-                </div>
-                <!-- Pregunta 7 -->
-                <div class="question-block mb-8">
-                    <h3 class="text-lg font-semibold mb-4 text-white"><span class="text-brand-primary mr-2">7.</span> El objetivo principal de sanar tus emociones es:</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-                        <label class="custom-radio cursor-pointer relative"><input type="radio" name="q7" value="bienestar" class="peer sr-only" required><div class="p-4 rounded-xl border border-gray-700 bg-gray-800/30 peer-hover:bg-gray-700/50 transition-all text-sm h-full flex items-center">Sentirme bien y no sufrir.</div></label>
-                        <label class="custom-radio cursor-pointer relative"><input type="radio" name="q7" value="control" class="peer sr-only"><div class="p-4 rounded-xl border border-gray-700 bg-gray-800/30 peer-hover:bg-gray-700/50 transition-all text-sm h-full flex items-center">Demostrar fuerza y control propio.</div></label>
-                        <label class="custom-radio cursor-pointer relative"><input type="radio" name="q7" value="gloria" class="peer sr-only"><div class="p-4 rounded-xl border border-gray-700 bg-gray-800/30 peer-hover:bg-gray-700/50 transition-all text-sm h-full flex items-center">Glorificar a Dios siendo como Cristo.</div></label>
-                    </div>
-                </div>
-
-                <div class="text-center pt-6">
-                    <button type="button" onclick="calculateResults()" class="bg-brand-primary hover:bg-purple-500 text-white font-bold py-4 px-10 rounded-full transition-transform hover:scale-105 shadow-[0_0_15px_rgba(139,92,246,0.5)]">
-                        Generar Mi Diagnóstico y Enviar Guía <i class="fa-solid fa-chart-pie ml-2"></i>
-                    </button>
-                </div>
-            </form>
-
-            <div id="results-area" class="hidden mt-8">
-                <h3 class="text-2xl font-bold mb-6 text-center text-brand-primary">Tu Perfil Neuro-Espiritual</h3>
-                <div class="relative h-64 md:h-80 w-full mb-8">
-                    <canvas id="radarChart"></canvas>
-                </div>
-                <div id="results-description" class="prose prose-invert max-w-none mb-8"></div>
-                <div class="text-center mt-12 border-t border-gray-700 pt-8">
-                    <div class="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-medium mb-4">
-                        <i class="fa-solid fa-circle-check mr-2"></i> ¡Guía enviada exitosamente a tu correo electrónico! Revisa tu bandeja de entrada.
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Sección de Libros y Recursos Publicados -->
-        <section class="mt-16 mb-12">
-            <h3 class="text-2xl font-bold text-center mb-8 text-white">Publicaciones y Obras del Autor</h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
-                <div class="glass-panel p-6 rounded-2xl flex items-center gap-4">
-                    <div class="w-20 h-28 bg-gray-800 rounded-lg flex-shrink-0 flex items-center justify-center border border-gray-700">
-                        <i class="fa-solid fa-book text-brand-primary text-3xl"></i>
-                    </div>
-                    <div>
-                        <h4 class="font-bold text-white text-lg">Neurociencia y Fe</h4>
-                        <p class="text-xs text-gray-400 mt-1">El manual definitivo para la renovación del entendimiento y la gestión de la amígdala.</p>
-                    </div>
-                </div>
-                <div class="glass-panel p-6 rounded-2xl flex items-center gap-4">
-                    <div class="w-20 h-28 bg-gray-800 rounded-lg flex-shrink-0 flex items-center justify-center border border-gray-700">
-                        <i class="fa-solid fa-book-bible text-brand-secondary text-3xl"></i>
-                    </div>
-                    <div>
-                        <h4 class="font-bold text-white text-lg">Antropología del Alma</h4>
-                        <p class="text-xs text-gray-400 mt-1">Fundamentos exegéticos para la sanidad integral y la identidad en Cristo.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- Footer con Bio del Dr. Alejandro Sirit y Logos de Marca -->
-    <footer class="bg-black/80 border-t border-gray-800 py-16 mt-6">
-        <div class="container mx-auto px-4 max-w-4xl text-center">
-            
-            <div class="glass-panel p-8 rounded-3xl mb-12 flex flex-col md:flex-row items-center gap-8 max-w-3xl mx-auto">
-                <div class="w-32 h-32 rounded-full overflow-hidden border-4 border-brand-primary/50 flex-shrink-0 bg-gray-800 relative">
-                    <img src="https://i.ibb.co/v6P2w447/perfil.jpg" alt="Dr. Alejandro Sirit" class="w-full h-full object-cover">
-                </div>
-                <div class="text-left">
-                    <h3 class="text-2xl font-bold text-white mb-2">Dr. Alejandro Sirit</h3>
-                    <p class="text-brand-secondary font-semibold text-sm mb-3 uppercase tracking-wider">Investigador de la neurociencia y exegética</p>
-                    <p class="text-gray-400 text-sm leading-relaxed">
-                        Dedicado a integrar la rigurosidad de la ciencia médica y cerebral con la inerrancia de las Escrituras para guiar en la sanidad integral del ser humano bajo los estándares de Cielo Efata y Xtrametrik.
-                    </p>
-                </div>
-            </div>
-
-            <p class="text-slate-500 text-sm">
-                &copy; 2026 Cielo Efata & Xtrametrik. Todos los derechos reservados.
-            </p>
+        <div style="margin-bottom: 15px;">
+            <a href="https://ibb.co/rf35qN4t" target="_blank">
+                <img src="https://i.ibb.co/h1c2rwDM/la-fe-no-basta-1.png" alt="La fe no basta" style="max-width: 180px; height: auto; border-radius: 4px; box-shadow: 0px 4px 6px rgba(0,0,0,0.1);" border="0">
+            </a>
         </div>
-    </footer>
 
-    <!-- Lógica de Conexión: Apps Script, Supabase y Automatización de Correo -->
-    <script>
-        const APPS_SCRIPT_URL = 'TU_WEB_APP_APPS_SCRIPT_URL'; // URL de tu Apps Script configurada para enviar el correo y guardar en Supabase
+        <div style="margin-bottom: 15px;">
+            <a href="https://ibb.co/xKdX8Y8Y" target="_blank">
+                <img src="https://i.ibb.co/8ntN4b4b/libro-espejo.png" alt="Libro espejo" style="max-width: 180px; height: auto; border-radius: 4px; box-shadow: 0px 4px 6px rgba(0,0,0,0.1);" border="0">
+            </a>
+        </div>
 
-        let globalUserData = { name: '', email: '', phone: '' };
-        let radarChartInstance = null;
+        <div style="margin-bottom: 15px;">
+            <a href="https://ibb.co/5W88SL4H" target="_blank">
+                <img src="https://i.ibb.co/bgBBCXm9/libro-cielo.png" alt="Libro cielo" style="max-width: 180px; height: auto; border-radius: 4px; box-shadow: 0px 4px 6px rgba(0,0,0,0.1);" border="0">
+            </a>
+        </div>
 
-        function startAssessment() {
-            const name = document.getElementById('user-name').value;
-            const email = document.getElementById('user-email').value;
-            const phone = document.getElementById('user-phone').value;
+        <div style="margin-bottom: 25px;">
+            <a href="https://ibb.co/m5q9Z2ZT" target="_blank">
+                <img src="https://i.ibb.co/Xxs70K0L/libro-callar.png" alt="Libro callar" style="max-width: 180px; height: auto; border-radius: 4px; box-shadow: 0px 4px 6px rgba(0,0,0,0.1);" border="0">
+            </a>
+        </div>
+        
+        <div style="margin-bottom: 25px;">
+            <a href="https://ibb.co/23STRrWf" target="_blank">
+                <img src="https://i.ibb.co/k2JtzT5W/libro-golgota.png" alt="Libro golgota" style="max-width: 180px; height: auto; border-radius: 4px; box-shadow: 0px 4px 6px rgba(0,0,0,0.1);" border="0">
+            </a>
+        </div>
+    </div>
 
-            if(name && email && phone) {
-                globalUserData = { name, email, phone };
-                document.getElementById('lead-form-section').classList.add('hidden');
-                const assessmentContainer = document.getElementById('assessment-container');
-                assessmentContainer.classList.remove('hidden');
-                document.getElementById('display-name').innerText = name.split(' ')[0];
-                document.getElementById('welcome-message').classList.remove('hidden');
-            }
-        }
+    <!-- LOGOTIPO XTRAMETRIK AL FINAL -->
+    <div style="margin-top: 30px; border-top: 1px solid #e2e8f0; padding-top: 20px;">
+        <p style="font-size: 12px; color: #718096; margin-bottom: 10px;">Potenciado por</p>
+        <a href="https://ibb.co/jZBjbdb2" target="_blank">
+            <img src="https://i.ibb.co/5xtJGdGy/xtrametrik-black-blue.jpg" alt="Xtrametrik" style="max-width: 140px; height: auto;" border="0">
+        </a>
+    </div>
 
-        async function calculateResults() {
-            let neuro = 33, antropo = 50, exegesis = 50;
-            
-            const payload = {
-                nombre: globalUserData.name,
-                email: globalUserData.email,
-                whatsapp: globalUserData.phone,
-                neuro_score: neuro + '%',
-                antropo_score: antropo + '%',
-                exegesis_score: exegesis + '%',
-                enviar_guia: true, // Indicador para que tu API/Apps Script dispare el correo con el recurso
-                fecha: new Date().toISOString()
-            };
-
-            try {
-                // Envío asíncrono a tu API de Apps Script / Supabase para almacenamiento y despacho de correo
-                await fetch(APPS_SCRIPT_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-            } catch (e) {
-                console.error("Error sincronizando con API:", e);
-            }
-
-            renderChart(neuro, antropo, exegesis);
-        }
-
-        function renderChart(neuro, antropo, exegesis) {
-            const ctx = document.getElementById('radarChart').getContext('2d');
-            if(radarChartInstance) radarChartInstance.destroy();
-
-            radarChartInstance = new Chart(ctx, {
-                type: 'radar',
-                data: {
-                    labels: ['Neuro-Regulación', 'Salud Antropológica', 'Perspectiva Exegética'],
-                    datasets: [{
-                        label: 'Madurez (%)',
-                        data: [neuro, antropo, exegesis],
-                        backgroundColor: 'rgba(139, 92, 246, 0.4)',
-                        borderColor: 'rgba(236, 72, 153, 1)',
-                        pointBackgroundColor: '#fff',
-                        borderWidth: 2,
-                    }]
-                },
-                options: {
-                    responsive: true, maintainAspectRatio: false,
-                    scales: { r: { ticks: { display: false, min: 0, max: 100 } } },
-                    plugins: { legend: { display: false } }
-                }
-            });
-
-            document.getElementById('assessment-form').classList.add('hidden');
-            document.getElementById('results-area').classList.remove('hidden');
-        }
-    </script>
-</body>
-</html>
+</div>
