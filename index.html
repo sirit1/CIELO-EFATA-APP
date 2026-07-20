@@ -17,12 +17,12 @@
 
     <script>
         /**
-         * ARQUITECTURA CIELO EFATA - Motor Frontend Pro & Leads WhatsApp
+         * ARQUITECTURA CIELO EFATA - Motor Frontend Pro & Lead Capture
          */
         const CONFIG = {
             supabaseUrl: 'https://xzjoruazhlwmaebnqqbv.supabase.co',
             supabaseKey: 'sb_publishable_AVcvj1Bq_uD7sYhbJZeHWA_NobPbVVF',
-            appsScriptUrl: 'AQUÍ_PEGAS_TU_URL_DE_WEB_APP_APPS_SCRIPT' // Tu URL de Google Apps Script (Línea 19)
+            appsScriptUrl: 'AQUÍ_PEGAS_TU_URL_DE_WEB_APP_APPS_SCRIPT' // Tu URL de Google Apps Script
         };
 
         let db = null;
@@ -76,8 +76,8 @@
                         </div>
                     </div>
 
-                    <!-- CREDENCIALES Y AUTORIDAD -->
-                    <div class="grid md:grid-cols-3 gap-8 items-center bg-gradient-to-br from-[#0a0f1d] to-black p-8 md:p-10 rounded-[2.5rem] border border-white/10">
+                    <!-- BIO DE ALTO ENGAGEMENT Y AUTORIDAD -->
+                    <div class="grid md:grid-cols-3 gap-8 items-center bg-gradient-to-br from-[#0a0f1d] to-black p-8 md:p-10 rounded-[2.5rem] border border-white/10 shadow-2xl">
                         <div class="flex justify-center">
                             <a href="https://ibb.co/8nbkQ2Q0" target="_blank">
                                 <img src="https://i.ibb.co/qLC6292d/perfil-lkin.png" class="w-48 h-48 rounded-2xl border-2 border-purple-500 shadow-2xl object-cover" alt="Dr. Alejandro Sirit">
@@ -86,15 +86,15 @@
                         <div class="md:col-span-2 space-y-4 text-left">
                             <h3 class="text-3xl font-extrabold text-white">Dr. Alejandro Sirit</h3>
                             <p class="text-xs text-amber-400 font-bold uppercase tracking-widest">Doctor Honoris Causa (Centro UNESCO) | IBM Data Scientist and Data Analytics IBM Certified</p>
-                            <p class="text-gray-300 text-sm leading-relaxed">
-                                Más de 30 años de trayectoria integrando la neurociencia, la exégesis y la gobernanza ética de la Inteligencia Artificial.
+                            <p class="text-gray-300 text-base leading-relaxed">
+                                Pionero en la intersección disruptiva entre la neurociencia aplicada, la exégesis bíblica y la gobernanza ética de la Inteligencia Artificial. Con más de 30 años de trayectoria internacional transformando empresas y vidas, su misión es rescatar la arquitectura mental del ser humano del colapso digital, devolviéndole el dominio propio, la paz interior y el diseño original bajo la majestad de YHWH.
                             </p>
                         </div>
                     </div>
 
-                    <!-- VITRINA DE OBRAS CON TODAS LAS PORTADAS -->
+                    <!-- OBRAS LITERARIAS DE RESTAURACIÓN -->
                     <div class="space-y-6 text-center">
-                        <h3 class="text-xs font-bold uppercase tracking-[0.3em] text-purple-400">Obras Exegéticas del Autor</h3>
+                        <h3 class="text-xs font-bold uppercase tracking-[0.3em] text-purple-400">Obras Literarias de Restauración</h3>
                         <div class="grid grid-cols-2 sm:grid-cols-5 gap-4">
                            <div class="rounded-2xl overflow-hidden border border-white/10 shadow-lg aspect-[2/3] bg-black/40 p-2"><img src="https://i.ibb.co/h1c2rwDM/la-fe-no-basta-1.png" class="w-full h-full object-cover rounded-xl"></div>
                            <div class="rounded-2xl overflow-hidden border border-white/10 shadow-lg aspect-[2/3] bg-black/40 p-2"><img src="https://i.ibb.co/8ntN4b4b/libro-espejo.png" class="w-full h-full object-cover rounded-xl"></div>
@@ -167,7 +167,7 @@
                 container.innerHTML = `
                     <div class="space-y-6 max-w-xl mx-auto text-left">
                         <h2 class="text-3xl font-black text-white uppercase text-center">Evaluación Concluida</h2>
-                        <p class="text-gray-300 text-center">Introduce tus datos de contacto para desbloquear tu <b>Informe Profundo y Comparativo</b> en pantalla y recibir tu Guía.</p>
+                        <p class="text-gray-300 text-center">Introduce tus datos de contacto para desbloquear tu <b>Informe Profundo y Comparativo</b> en pantalla y registrar tu acceso.</p>
                         
                         <div class="space-y-4">
                             <div>
@@ -181,7 +181,7 @@
                         </div>
 
                         <button onclick="App.procesarInformeYGuardar()" class="w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-black py-5 rounded-2xl uppercase tracking-wider shadow-lg transition-all text-lg cursor-pointer mt-4">
-                            Ver mi Informe Profundo y Enviar Guía
+                            Ver mi Informe Profundo y Desbloquear Guía
                         </button>
                     </div>
                 `;
@@ -199,7 +199,7 @@
                 this.emailUsuario = emailInput;
                 this.whatsappUsuario = wppInput;
 
-                // 1. Guardar en Supabase
+                // 1. Guardar de forma segura en Supabase (Tu Base de Datos Central)
                 if (db) {
                     try {
                         await db.from('leads_cieloefata').insert([{
@@ -214,7 +214,7 @@
                     }
                 }
 
-                // 2. Disparar Google Apps Script para el envío del correo de la Guía
+                // 2. Disparar Apps Script para automatizar el correo
                 if (CONFIG.appsScriptUrl && CONFIG.appsScriptUrl !== 'AQUÍ_PEGAS_TU_URL_DE_WEB_APP_APPS_SCRIPT') {
                     try {
                         fetch(CONFIG.appsScriptUrl, {
@@ -233,7 +233,6 @@
                     }
                 }
 
-                // 3. Renderizar el Informe Profundo y Comparativo en Pantalla
                 this.renderInformeFinal();
             },
 
@@ -254,7 +253,7 @@
                             <h3 class="text-lg font-bold text-amber-400 uppercase tracking-wide">1. Perspectiva Neurocientífica</h3>
                             <p class="text-gray-300 text-sm leading-relaxed">
                                 ${esFractura ? 
-                                "Tus resultados indican un **secuestro amigdalino prolongado**. La corteza prefrontal ha cedido el control ante patrones de estrés autómata, lo que genera fatiga sináptica y respuestas reactivas automáticas ante la incertidumbre." : 
+                                "Tus resultados indican un <b>secuestro amigdalino prolongado</b>. La corteza prefrontal ha cedido el control ante patrones de estrés autómata, lo que genera fatiga sináptica y respuestas reactivas automáticas ante la incertidumbre." : 
                                 "Muestras un nivel moderado de calibración prefrontal, aunque existen micro-desconexiones neuronales recurrentes ante los estímulos digitales y las demandas del entorno."}
                             </p>
                         </div>
@@ -284,7 +283,7 @@
                         </div>
 
                         <div class="bg-purple-950/40 p-6 rounded-2xl border border-purple-500/30 text-center space-y-4">
-                            <p class="text-white font-bold">Hemos enviado la Guía de Restauración completa a <span class="text-purple-300">${this.emailUsuario}</span> y registrado tu WhatsApp (<span class="text-purple-300">${this.whatsappUsuario}</span>).</p>
+                            <p class="text-white font-bold">Hemos registrado tu contacto con éxito (<span class="text-purple-300">${this.whatsappUsuario}</span>) y enviado la Guía a <span class="text-purple-300">${this.emailUsuario}</span>.</p>
                             <button onclick="location.reload()" class="bg-white/10 hover:bg-white/20 text-white px-8 py-3 rounded-xl font-bold uppercase tracking-wider transition-all cursor-pointer text-sm">
                                 Realizar Nueva Evaluación
                             </button>
