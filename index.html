@@ -3,99 +3,613 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cielo Efata - Sistema Oficial</title>
-    <!-- Tailwind CSS para un diseño profesional y moderno -->
+    <title>Mente y Espíritu | Cielo Efata</title>
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #07090e;
-            color: #f8fafc;
+    
+    <!-- Chart.js para el gráfico de radar -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- FontAwesome para íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            dark: '#0B0F19',
+                            primary: '#8B5CF6', /* Purpura */
+                            secondary: '#EC4899', /* Rosa */
+                            accent: '#3B82F6' /* Azul */
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.8s ease-out forwards',
+                        'slide-up': 'slideUp 0.8s ease-out forwards',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
         }
-        .glow-effect {
-            box-shadow: 0 0 25px rgba(56, 189, 248, 0.15);
+    </script>
+    
+    <style>
+        body {
+            background-color: #0B0F19;
+            color: #F3F4F6;
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(139, 92, 246, 0.15), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(236, 72, 153, 0.15), transparent 25%);
+            background-attachment: fixed;
+        }
+        
+        .glass-panel {
+            background: rgba(17, 24, 39, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .custom-radio input:checked + div {
+            background-color: #8B5CF6;
+            border-color: #8B5CF6;
+            box-shadow: 0 0 15px rgba(139, 92, 246, 0.5);
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between antialiased">
+<body class="min-h-screen flex flex-col font-sans overflow-x-hidden selection:bg-brand-primary selection:text-white">
 
-    <!-- Header / Navbar -->
-    <header class="w-full border-b border-slate-800 bg-slate-950/60 backdrop-blur-md sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-            <div class="flex items-center space-x-3">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-sky-500 to-indigo-600 flex items-center justify-center font-bold text-xl text-white shadow-lg">
-                    CE
-                </div>
-                <div>
-                    <h1 class="text-lg font-bold tracking-tight text-white">CIELO EFATA</h1>
-                    <p class="text-xs text-slate-400">Sistema Blindado y Operativo</p>
-                </div>
-            </div>
-            <div class="flex items-center space-x-4">
-                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                    <span class="w-2 h-2 rounded-full bg-emerald-400 mr-2 animate-pulse"></span>
-                    Estado: En Línea
-                </span>
-            </div>
+    <!-- FORMULARIO OCULTO PARA NETLIFY / VERCEL -->
+    <form name="cielo_efata_oficial" method="POST" data-netlify="true" hidden>
+        <input type="hidden" name="form-name" value="cielo_efata_oficial" />
+        <input type="text" name="nombre">
+        <input type="email" name="email">
+        <input type="text" name="whatsapp">
+        <input type="text" name="neuro_score">
+        <input type="text" name="antropo_score">
+        <input type="text" name="exegesis_score">
+    </form>
+
+    <header class="pt-12 pb-6 px-4 text-center animate-slide-up">
+        <div class="inline-block mb-4 p-3 rounded-full bg-brand-primary/20 text-brand-primary">
+            <i class="fa-solid fa-brain text-3xl"></i>
+            <i class="fa-solid fa-cross text-3xl ml-2"></i>
         </div>
+        <h1 class="text-4xl md:text-6xl font-extrabold mb-4 tracking-tight px-2">
+            <span class="bg-clip-text text-transparent bg-gradient-to-r from-brand-primary via-brand-secondary to-brand-primary animate-gradient">
+                Diseñados para la Restauración
+            </span>
+        </h1>
+        <p class="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto font-light px-4">
+            Descubre cómo la neurociencia, tu diseño antropológico y la verdad revelada en las Escrituras se unen para transformar tu gestión emocional. Rinde tu mente al diseño original del Creador.
+        </p>
     </header>
 
-    <!-- Main Content Area -->
-    <main class="max-w-7xl mx-auto px-6 py-12 flex-grow flex items-center justify-center w-full">
-        <div class="w-full max-w-3xl bg-slate-900/80 border border-slate-800 rounded-2xl p-8 md:p-12 glow-effect">
-            <div class="text-center space-y-6">
-                <span class="text-xs uppercase tracking-widest text-sky-400 font-semibold bg-sky-500/10 px-3 py-1 rounded-full border border-sky-500/20">
-                    Plataforma Activa
-                </span>
-                <h2 class="text-3xl md:text-5xl font-extrabold text-white tracking-tight">
-                    Restauración Mental y Espiritual
-                </h2>
-                <p class="text-slate-300 text-base md:text-lg max-w-xl mx-auto leading-relaxed">
-                    El sistema se encuentra operando al 100%. Las conexiones de base de datos, módulos de acceso y flujos comerciales están activos para tu campaña.
-                </p>
+    <main class="flex-grow container mx-auto px-4 py-8 max-w-4xl">
+        
+        <section id="lead-form-section" class="glass-panel rounded-3xl p-8 md:p-12 shadow-2xl mb-12 animate-fade-in relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-primary to-brand-secondary"></div>
+            
+            <div class="text-center mb-8">
+                <h2 class="text-2xl font-bold mb-2">Comienza tu Evaluación Gratuita</h2>
+                <p class="text-gray-400 text-sm md:text-base">Ingresa tus datos para acceder al test de 7 preguntas y recibir tu informe neuro-espiritual junto con la guía de regalo.</p>
+            </div>
 
-                <!-- Dynamic App Interface Container -->
-                <div id="app-dynamic-content" class="mt-8 pt-8 border-t border-slate-800 text-left">
-                    <div class="bg-slate-950/60 rounded-xl p-6 border border-slate-800/80 space-y-4">
-                        <div class="flex justify-between items-center">
-                            <h3 class="text-sm font-semibold text-slate-200 uppercase tracking-wider">Módulos del Sistema</h3>
-                            <span id="system-time" class="text-xs text-slate-400 font-mono"></span>
-                        </div>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div class="p-4 rounded-lg bg-slate-900 border border-slate-800 hover:border-sky-500/50 transition-all cursor-pointer group">
-                                <h4 class="text-sky-400 font-medium text-sm group-hover:text-sky-300">Gestión de Leads & CRM</h4>
-                                <p class="text-xs text-slate-400 mt-1">Conexión activa con pasarela comercial.</p>
+            <form id="lead-form" class="max-w-md mx-auto space-y-5" onsubmit="event.preventDefault(); startAssessment();">
+                <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-1"><i class="fa-regular fa-user mr-2"></i>Nombre completo</label>
+                    <input type="text" id="user-name" required class="w-full bg-gray-800/50 border border-gray-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-primary focus:ring-1 focus:ring-brand-primary transition-colors" placeholder="Ej. Juan Pérez">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-1"><i class="fa-regular fa-envelope mr-2"></i>Correo electrónico</label>
+                    <input type="email" id="user-email" required class="w-full bg-gray-800/50 border border-gray-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-primary focus:ring-1 focus:ring-brand-primary transition-colors" placeholder="tu@email.com">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-1"><i class="fa-brands fa-whatsapp mr-2"></i>Número de WhatsApp</label>
+                    <input type="tel" id="user-phone" required class="w-full bg-gray-800/50 border border-gray-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-primary focus:ring-1 focus:ring-brand-primary transition-colors" placeholder="+1 234 567 8900">
+                </div>
+                <button type="submit" class="w-full bg-gradient-to-r from-brand-primary to-brand-secondary text-white font-bold py-4 rounded-xl hover:shadow-[0_0_20px_rgba(139,92,246,0.5)] transition-all hover:scale-[1.02] mt-4">
+                    Comenzar Evaluación Ahora <i class="fa-solid fa-arrow-right ml-2"></i>
+                </button>
+                <p class="text-xs text-center text-gray-500 mt-4">
+                    *Tus datos están seguros. Cielo Efata es una organización sin fines de lucro.
+                </p>
+            </form>
+        </section>
+
+        <section id="assessment-container" class="hidden glass-panel rounded-3xl p-6 md:p-10 shadow-2xl relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-accent to-brand-primary"></div>
+            
+            <div id="welcome-message" class="text-center mb-8 hidden">
+                <h2 class="text-2xl font-bold text-brand-primary">¡Hola, <span id="display-name"></span>!</h2>
+                <p class="text-gray-300">Responde con total honestidad. No hay respuestas correctas o incorrectas.</p>
+            </div>
+
+            <form id="assessment-form" class="space-y-10">
+                <!-- Pregunta 1 -->
+                <div class="question-block border-b border-gray-800 pb-8">
+                    <h3 class="text-lg font-semibold mb-4 text-white"><span class="text-brand-primary mr-2">1.</span> Cuando enfrentas una situación de alto estrés o conflicto repentino, tu primera reacción suele ser:</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <label class="custom-radio cursor-pointer relative">
+                            <input type="radio" name="q1" value="amigdala" class="peer sr-only" required>
+                            <div class="p-4 rounded-xl border border-gray-700 bg-gray-800/30 peer-hover:bg-gray-700/50 transition-all text-sm h-full flex items-center">
+                                Explosiva, impulsiva o de pánico total (lucha o huida incontrolable).
                             </div>
-                            <div class="p-4 rounded-lg bg-slate-900 border border-slate-800 hover:border-indigo-500/50 transition-all cursor-pointer group">
-                                <h4 class="text-indigo-400 font-medium text-sm group-hover:text-indigo-300">Base de Datos Central</h4>
-                                <p class="text-xs text-slate-400 mt-1">Sincronización en tiempo real.</p>
+                        </label>
+                        <label class="custom-radio cursor-pointer relative">
+                            <input type="radio" name="q1" value="bloqueo" class="peer sr-only">
+                            <div class="p-4 rounded-xl border border-gray-700 bg-gray-800/30 peer-hover:bg-gray-700/50 transition-all text-sm h-full flex items-center">
+                                Parálisis mental; me quedo en blanco y no sé cómo actuar.
                             </div>
-                        </div>
+                        </label>
+                        <label class="custom-radio cursor-pointer relative">
+                            <input type="radio" name="q1" value="corteza" class="peer sr-only">
+                            <div class="p-4 rounded-xl border border-gray-700 bg-gray-800/30 peer-hover:bg-gray-700/50 transition-all text-sm h-full flex items-center">
+                                Logro pausar unos segundos, respirar y buscar una solución lógica.
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Pregunta 2 -->
+                <div class="question-block border-b border-gray-800 pb-8">
+                    <h3 class="text-lg font-semibold mb-4 text-white"><span class="text-brand-primary mr-2">2.</span> Si cometes un error grave en tu vida personal o laboral, ¿qué narrativa predomina en tu mente?</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <label class="custom-radio cursor-pointer relative">
+                            <input type="radio" name="q2" value="condenacion" class="peer sr-only" required>
+                            <div class="p-4 rounded-xl border border-gray-700 bg-gray-800/30 peer-hover:bg-gray-700/50 transition-all text-sm h-full flex items-center">
+                                "Soy un fracaso, Dios debe estar decepcionado de mí, no valgo nada."
+                            </div>
+                        </label>
+                        <label class="custom-radio cursor-pointer relative">
+                            <input type="radio" name="q2" value="justificacion" class="peer sr-only">
+                            <div class="p-4 rounded-xl border border-gray-700 bg-gray-800/30 peer-hover:bg-gray-700/50 transition-all text-sm h-full flex items-center">
+                                Intento justificarlo culpando a mi pasado, mi genética o a otros.
+                            </div>
+                        </label>
+                        <label class="custom-radio cursor-pointer relative">
+                            <input type="radio" name="q2" value="redencion" class="peer sr-only">
+                            <div class="p-4 rounded-xl border border-gray-700 bg-gray-800/30 peer-hover:bg-gray-700/50 transition-all text-sm h-full flex items-center">
+                                Siento dolor por el error, pero corro al arrepentimiento sabiendo que mi identidad está segura en Cristo.
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Pregunta 3 -->
+                <div class="question-block border-b border-gray-800 pb-8">
+                    <h3 class="text-lg font-semibold mb-4 text-white"><span class="text-brand-primary mr-2">3.</span> Cuando experimentas tristeza profunda o ansiedad prolongada:</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <label class="custom-radio cursor-pointer relative">
+                            <input type="radio" name="q3" value="emocion_reina" class="peer sr-only" required>
+                            <div class="p-4 rounded-xl border border-gray-700 bg-gray-800/30 peer-hover:bg-gray-700/50 transition-all text-sm h-full flex items-center">
+                                Dejo que la emoción dicte lo que es verdad (Si me siento solo, asumo que Dios me abandonó).
+                            </div>
+                        </label>
+                        <label class="custom-radio cursor-pointer relative">
+                            <input type="radio" name="q3" value="supresion" class="peer sr-only">
+                            <div class="p-4 rounded-xl border border-gray-700 bg-gray-800/30 peer-hover:bg-gray-700/50 transition-all text-sm h-full flex items-center">
+                                Ignoro la emoción completamente fingiendo que todo está bien (positivismo tóxico).
+                            </div>
+                        </label>
+                        <label class="custom-radio cursor-pointer relative">
+                            <input type="radio" name="q3" value="exegesis" class="peer sr-only">
+                            <div class="p-4 rounded-xl border border-gray-700 bg-gray-800/30 peer-hover:bg-gray-700/50 transition-all text-sm h-full flex items-center">
+                                Cuestiono la emoción a la luz de las Escrituras para encontrar la raíz y la mentira que estoy creyendo.
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Pregunta 4 -->
+                <div class="question-block border-b border-gray-800 pb-8">
+                    <h3 class="text-lg font-semibold mb-4 text-white"><span class="text-brand-primary mr-2">4.</span> ¿Cómo percibes tu cuerpo y tus procesos biológicos (cansancio, hormonas, neurodivergencia) frente a tu espiritualidad?</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <label class="custom-radio cursor-pointer relative">
+                            <input type="radio" name="q4" value="desconexion" class="peer sr-only" required>
+                            <div class="p-4 rounded-xl border border-gray-700 bg-gray-800/30 peer-hover:bg-gray-700/50 transition-all text-sm h-full flex items-center">
+                                Creo que el cuerpo no importa, solo lo espiritual. Si estoy deprimido, es solo falta de fe.
+                            </div>
+                        </label>
+                        <label class="custom-radio cursor-pointer relative">
+                            <input type="radio" name="q4" value="determinismo" class="peer sr-only">
+                            <div class="p-4 rounded-xl border border-gray-700 bg-gray-800/30 peer-hover:bg-gray-700/50 transition-all text-sm h-full flex items-center">
+                                Mi diagnóstico o mi genética dictan quién soy; no tengo control sobre mis reacciones.
+                            </div>
+                        </label>
+                        <label class="custom-radio cursor-pointer relative">
+                            <input type="radio" name="q4" value="integracion" class="peer sr-only">
+                            <div class="p-4 rounded-xl border border-gray-700 bg-gray-800/30 peer-hover:bg-gray-700/50 transition-all text-sm h-full flex items-center">
+                                Entiendo que mi biología afecta mis emociones, pero uso la disciplina espiritual y médica para honrar a Dios con mi cuerpo.
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Pregunta 5 -->
+                <div class="question-block border-b border-gray-800 pb-8">
+                    <h3 class="text-lg font-semibold mb-4 text-white"><span class="text-brand-primary mr-2">5.</span> Cuando detectas un patrón de pensamiento negativo y recurrente:</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <label class="custom-radio cursor-pointer relative">
+                            <input type="radio" name="q5" value="rumiacion" class="peer sr-only" required>
+                            <div class="p-4 rounded-xl border border-gray-700 bg-gray-800/30 peer-hover:bg-gray-700/50 transition-all text-sm h-full flex items-center">
+                                Me hundo en él, repitiéndolo una y otra vez (rumiación) hasta que me agota.
+                            </div>
+                        </label>
+                        <label class="custom-radio cursor-pointer relative">
+                            <input type="radio" name="q5" value="distraccion" class="peer sr-only">
+                            <div class="p-4 rounded-xl border border-gray-700 bg-gray-800/30 peer-hover:bg-gray-700/50 transition-all text-sm h-full flex items-center">
+                                Intento distraerme con redes sociales, trabajo o entretenimiento para no pensar.
+                            </div>
+                        </label>
+                        <label class="custom-radio cursor-pointer relative">
+                            <input type="radio" name="q5" value="renovacion" class="peer sr-only">
+                            <div class="p-4 rounded-xl border border-gray-700 bg-gray-800/30 peer-hover:bg-gray-700/50 transition-all text-sm h-full flex items-center">
+                                Llevo ese pensamiento "cautivo a Cristo" y lo reemplazo intencionalmente meditando en un pasaje bíblico específico.
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Pregunta 6 -->
+                <div class="question-block border-b border-gray-800 pb-8">
+                    <h3 class="text-lg font-semibold mb-4 text-white"><span class="text-brand-primary mr-2">6.</span> Cuando alguien te ofende profundamente:</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <label class="custom-radio cursor-pointer relative">
+                            <input type="radio" name="q6" value="venganza" class="peer sr-only" required>
+                            <div class="p-4 rounded-xl border border-gray-700 bg-gray-800/30 peer-hover:bg-gray-700/50 transition-all text-sm h-full flex items-center">
+                                Guardo rencor, el cortisol me domina al recordar la ofensa y busco que paguen de alguna forma.
+                            </div>
+                        </label>
+                        <label class="custom-radio cursor-pointer relative">
+                            <input type="radio" name="q6" value="aislamiento" class="peer sr-only">
+                            <div class="p-4 rounded-xl border border-gray-700 bg-gray-800/30 peer-hover:bg-gray-700/50 transition-all text-sm h-full flex items-center">
+                                Corto la relación inmediatamente para protegerme de cualquier dolor futuro.
+                            </div>
+                        </label>
+                        <label class="custom-radio cursor-pointer relative">
+                            <input type="radio" name="q6" value="perdon" class="peer sr-only">
+                            <div class="p-4 rounded-xl border border-gray-700 bg-gray-800/30 peer-hover:bg-gray-700/50 transition-all text-sm h-full flex items-center">
+                                Proceso el dolor, pongo límites sanos, pero decido perdonar recordando la gracia que Cristo tuvo conmigo.
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Pregunta 7 -->
+                <div class="question-block mb-8">
+                    <h3 class="text-lg font-semibold mb-4 text-white"><span class="text-brand-primary mr-2">7.</span> El objetivo principal de sanar tus emociones y tu mente es:</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <label class="custom-radio cursor-pointer relative">
+                            <input type="radio" name="q7" value="bienestar" class="peer sr-only" required>
+                            <div class="p-4 rounded-xl border border-gray-700 bg-gray-800/30 peer-hover:bg-gray-700/50 transition-all text-sm h-full flex items-center">
+                                Sentirme bien conmigo mismo, tener éxito y no sufrir.
+                            </div>
+                        </label>
+                        <label class="custom-radio cursor-pointer relative">
+                            <input type="radio" name="q7" value="control" class="peer sr-only">
+                            <div class="p-4 rounded-xl border border-gray-700 bg-gray-800/30 peer-hover:bg-gray-700/50 transition-all text-sm h-full flex items-center">
+                                Demostrarle a los demás que soy fuerte y que tengo el control de mi vida.
+                            </div>
+                        </label>
+                        <label class="custom-radio cursor-pointer relative">
+                            <input type="radio" name="q7" value="gloria" class="peer sr-only">
+                            <div class="p-4 rounded-xl border border-gray-700 bg-gray-800/30 peer-hover:bg-gray-700/50 transition-all text-sm h-full flex items-center">
+                                Glorificar a Dios con mi vida, siendo cada día más parecido a Cristo (Santificación).
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="text-center pt-6">
+                    <button type="button" onclick="calculateResults()" class="bg-brand-primary hover:bg-purple-500 text-white font-bold py-4 px-10 rounded-full transition-transform hover:scale-105 shadow-[0_0_15px_rgba(139,92,246,0.5)]">
+                        Generar Mi Diagnóstico <i class="fa-solid fa-chart-pie ml-2"></i>
+                    </button>
+                </div>
+            </form>
+
+            <div id="results-area" class="hidden mt-8 animate-fade-in">
+                <h3 class="text-2xl font-bold mb-6 text-center text-brand-primary">Tu Perfil Neuro-Espiritual</h3>
+                <div class="relative h-64 md:h-80 w-full mb-8">
+                    <canvas id="radarChart"></canvas>
+                </div>
+                
+                <div id="results-description" class="prose prose-invert max-w-none mb-8"></div>
+                
+                <div class="text-center mt-12 border-t border-gray-700 pt-8">
+                    <h4 class="text-xl font-bold mb-4 text-white">¡Tu Regalo Especial por Completar el Test!</h4>
+                    <p class="text-gray-400 mb-6">Hemos preparado una guía paso a paso basada en Neurociencia y las Escrituras para ti.</p>
+                    <button type="button" onclick="document.getElementById('free-guide-section').classList.remove('hidden'); this.style.display='none'; document.getElementById('free-guide-section').scrollIntoView({behavior: 'smooth'});" class="bg-gradient-to-r from-brand-primary to-brand-secondary text-white font-bold py-4 px-8 rounded-full hover:scale-105 transition-transform shadow-[0_0_15px_rgba(139,92,246,0.4)]">
+                        <i class="fa-solid fa-book-open mr-2"></i> Leer Guía Gratuita Ahora
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN DE LA GUÍA GRATUITA -->
+        <section id="free-guide-section" class="max-w-4xl mx-auto mt-4 mb-20 hidden animate-fade-in px-4">
+            <div class="glass-panel rounded-3xl p-8 md:p-12 shadow-2xl border border-brand-primary/30 bg-gradient-to-b from-brand-dark to-[#1a1230]">
+                <div class="text-center mb-10">
+                    <span class="bg-brand-primary text-white text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-widest">Guía Exclusiva</span>
+                    <h2 class="text-3xl md:text-4xl font-bold mt-6 mb-4 bg-clip-text text-transparent bg-gradient-to-r from-brand-primary to-brand-secondary">
+                        Neurociencia y Fe: El Paso a Paso para el Dominio Propio
+                    </h2>
+                    <p class="text-gray-300 text-lg">Descubre cómo Dios diseñó tu cerebro y cómo usar las Escrituras para recablear tus emociones hacia Cristo.</p>
+                </div>
+                
+                <div class="space-y-8 text-gray-300 leading-relaxed text-left">
+                    <div>
+                        <h3 class="text-2xl font-bold text-white mb-3 border-b border-gray-700 pb-2 flex items-center"><i class="fa-solid fa-brain text-brand-primary mr-3"></i> Introducción: Tu Cerebro es Moldeable</h3>
+                        <p>La neurociencia moderna ha confirmado algo fascinante llamado <strong>Neuroplasticidad</strong>: la capacidad del cerebro para cambiar físicamente y crear nuevas conexiones. Lo maravilloso es que el Apóstol Pablo nos reveló este principio hace 2000 años en Romanos 12:2: <em>"Transformaos por medio de la renovación de vuestro entendimiento"</em>. No eres esclavo de tu genética, de tu pasado, ni de tu "cableado" actual. A través de la obra redentora de Cristo y tu intencionalidad, puedes rediseñar tus rutas neuronales.</p>
+                    </div>
+
+                    <div class="bg-black/40 p-6 md:p-8 rounded-2xl border border-gray-800 shadow-inner hover:border-purple-500/50 transition-colors">
+                        <h3 class="text-xl font-bold text-brand-secondary mb-4">Paso 1: La Pausa Neuro-Espiritual (Calmar la Amígdala)</h3>
+                        <p class="mb-4">Cuando sientes miedo, ira, estrés o ansiedad extrema, la "amígdala" (el centro de alarmas y supervivencia del cerebro) toma el control, apagando tu corteza prefrontal (la zona de la lógica y la toma de decisiones). No puedes procesar la Verdad bíblica eficazmente durante un "secuestro amigdalino".</p>
+                        <ul class="list-disc pl-6 space-y-3">
+                            <li><strong>Acción Neurológica:</strong> Respira profundamente (Inhala por 4 segundos, retén 4 segundos, exhala por 6 segundos). Esto activa el nervio vago y el sistema nervioso parasimpático, enviando la señal al cerebro de que "estás a salvo".</li>
+                            <li><strong>Acción Bíblica:</strong> Mientras respiras, centra tu mente repitiendo el nombre de Jesús o meditando en <em>Filipenses 4:7 ("Y la paz de Dios, que sobrepasa todo entendimiento, guardará vuestros corazones y vuestros pensamientos en Cristo Jesús")</em>.</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-black/40 p-6 md:p-8 rounded-2xl border border-gray-800 shadow-inner hover:border-purple-500/50 transition-colors">
+                        <h3 class="text-xl font-bold text-brand-secondary mb-4">Paso 2: Exégesis de tu Emoción (Análisis de Raíz)</h3>
+                        <p class="mb-4">La exégesis es el proceso de extraer el significado real y profundo de un texto. Debemos hacer exactamente lo mismo con nuestras emociones. Las emociones en sí mismas no son pecado, son "luces en el tablero del auto" que te indican qué está pasando en tu motor interior.</p>
+                        <ul class="list-disc pl-6 space-y-3">
+                            <li><strong>Pregunta clave de confrontación:</strong> ¿Qué mentira estoy creyendo en este momento para sentirme así? (Ej. "Dios me abandonó", "No soy suficiente", "El futuro es un desastre").</li>
+                            <li><strong>Filtro de la Verdad:</strong> Compara esa emoción y esa creencia con la Palabra. Si lo que sientes contradice lo que Dios dice, estás operando bajo una mentira que está alterando tu neuroquímica.</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-black/40 p-6 md:p-8 rounded-2xl border border-gray-800 shadow-inner hover:border-purple-500/50 transition-colors">
+                        <h3 class="text-xl font-bold text-brand-secondary mb-4">Paso 3: Rediseño Cognitivo mediante la Palabra</h3>
+                        <p class="mb-4">Para debilitar una "autopista neuronal" de ansiedad y construir una nueva ruta de paz y dominio propio, necesitas la repetición constante. Aquí entra la disciplina espiritual de la meditación.</p>
+                        <ul class="list-disc pl-6 space-y-3">
+                            <li><strong>Acción:</strong> Toma un versículo específico que contrarreste tu lucha actual. Memorízalo, escríbelo, pero sobre todo, <strong>decláralo en voz alta</strong>.</li>
+                            <li><strong>La Ciencia detrás:</strong> Hablar en voz alta activa áreas motoras y auditivas del cerebro simultáneamente, creando conexiones sinápticas mucho más fuertes que si solo lo piensas en silencio. Es literalmente usar la "Espada del Espíritu" para cortar viejos patrones neuronales.</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-black/40 p-6 md:p-8 rounded-2xl border border-gray-800 shadow-inner hover:border-purple-500/50 transition-colors">
+                        <h3 class="text-xl font-bold text-brand-secondary mb-4">Paso 4: Anclaje Antropológico en la Identidad de Cristo</h3>
+                        <p class="mb-4">Desde la antropología teológica correcta, tu identidad jamás se basa en lo que haces, lo que sientes, tus traumas del pasado o tu condición neurodivergente. Tu valor se fundamenta exclusivamente en que fuiste creado a <em>Imago Dei</em> (Imagen de Dios) y has sido redimido, justificado y adoptado por la sangre de Cristo.</p>
+                        <p class="font-bold text-brand-primary mt-4">Conclusión Final:</p>
+                        <p>Rinde tu mente a Él diariamente. La verdadera sanidad integral no es solo la ausencia de síntomas o el control emocional táctico; es volver al diseño original del Creador, operando bajo el poder del Espíritu Santo en ti. ¡Cristo es el principio y el fin de tu restauración bio-psico-espiritual!</p>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
+
     </main>
 
-    <!-- Footer -->
-    <footer class="w-full border-t border-slate-800 bg-slate-950/40 py-6 text-center text-xs text-slate-500">
-        <p>&copy; 2026 Cielo Efata. Todos los derechos reservados.</p>
+    <footer class="bg-black/80 border-t border-gray-800 py-16 mt-6 relative overflow-hidden">
+        <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-3/4 h-1 bg-gradient-to-r from-transparent via-brand-primary to-transparent opacity-50"></div>
+        <div class="container mx-auto px-4 max-w-4xl text-center">
+            
+            <div class="glass-panel p-8 rounded-3xl mb-12 flex flex-col md:flex-row items-center gap-8 max-w-3xl mx-auto shadow-lg border border-brand-primary/20">
+                <div class="w-32 h-32 rounded-full overflow-hidden border-4 border-brand-primary/50 flex-shrink-0 bg-gray-800 flex items-center justify-center relative">
+                    <img src="https://i.ibb.co/v6P2w447/perfil.jpg" alt="Dr. Alejandro Sirit" onerror="this.style.display='none'; document.getElementById('fallback-icon').classList.remove('hidden');" class="w-full h-full object-cover">
+                    <i id="fallback-icon" class="fa-solid fa-user-doctor text-5xl text-brand-primary hidden"></i>
+                </div>
+                <div class="text-left">
+                    <h3 class="text-2xl font-bold text-white mb-2">Dr. Alejandro Sirit</h3>
+                    <p class="text-brand-secondary font-semibold text-sm mb-3 uppercase tracking-wider">Investigador de la neurociencia y exegética, y vive en la fe</p>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Dedicado a integrar la rigurosidad de la ciencia médica y cerebral con la inerrancia de las Escrituras. Mi misión es guiar a las personas a comprender su diseño biológico y redimir sus emociones a través del diseño original de Cristo, ayudando a quienes enfrentan desafíos de bioneurodivergencia y crisis existenciales.
+                    </p>
+                </div>
+            </div>
+
+            <div class="flex flex-col items-center mb-8">
+                <div class="inline-block p-4 rounded-full bg-gray-900 border border-gray-800 shadow-[0_0_15px_rgba(139,92,246,0.3)] mb-6">
+                    <i class="fa-solid fa-dove text-4xl text-brand-secondary"></i>
+                </div>
+                <h2 class="text-2xl font-bold mb-4">Cielo Efata</h2>
+                <p class="text-slate-400 mb-8 max-w-2xl mx-auto">Cielo Efata es una organización sin fines de lucro dedicada a la sanidad integral del ser humano: mente, cuerpo y espíritu, anclados en la Verdad del Evangelio.</p>
+                
+                <div class="flex flex-col md:flex-row justify-center gap-6 mb-10 w-full md:w-auto">
+                    <a href="https://www.instagram.com/cieloefata?igsh=MTQ4M2Vxem5lcWVrcQ==" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-3 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-bold py-4 px-8 rounded-full transition-transform hover:scale-105 shadow-lg w-full md:w-auto">
+                        <i class="fa-brands fa-instagram text-2xl"></i> Síguenos en @cieloefata
+                    </a>
+                    <a href="https://www.linkedin.com/in/dr-alejandro-sirit-0659a414" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-3 bg-[#0077b5] hover:bg-[#005e93] text-white font-bold py-4 px-8 rounded-full transition-transform hover:scale-105 shadow-lg w-full md:w-auto">
+                        <i class="fa-brands fa-linkedin text-2xl"></i> Conecta con Dr. Alejandro Sirit
+                    </a>
+                </div>
+            </div>
+            
+            <p class="text-slate-500 text-sm flex items-center justify-center relative">
+                &copy; 2026 Cielo Efata. Todos los derechos reservados. <br>
+                <em>"Y conoceréis la verdad, y la verdad os hará libres." - Juan 8:32</em>
+            </p>
+        </div>
     </footer>
 
-    <!-- Script de control y métricas dinámicas -->
+    <div id="custom-modal" class="hidden fixed inset-0 bg-black/80 z-[100] flex items-center justify-center p-4 backdrop-blur-sm animate-fade-in">
+        <div class="bg-gray-900 border border-gray-700 rounded-2xl p-6 max-w-sm w-full shadow-2xl">
+            <h3 id="modal-title" class="text-xl font-bold text-white mb-2">Aviso</h3>
+            <p id="modal-message" class="text-gray-300 mb-6"></p>
+            <div class="flex justify-end gap-3">
+                <button id="modal-confirm" class="bg-brand-primary hover:bg-purple-500 text-white px-6 py-2 rounded-lg font-semibold transition-colors">Entendido</button>
+            </div>
+        </div>
+    </div>
+
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const timeElement = document.getElementById('system-time');
-            if (timeElement) {
-                const updateTime = () => {
-                    const now = new Date();
-                    timeElement.textContent = now.toLocaleTimeString();
+        let globalUserData = { name: '', email: '', phone: '' };
+        let radarChartInstance = null;
+
+        function showModal(title, message) {
+            return new Promise((resolve) => {
+                const modal = document.getElementById('custom-modal');
+                document.getElementById('modal-title').innerText = title;
+                document.getElementById('modal-message').innerText = message;
+                
+                const confirmBtn = document.getElementById('modal-confirm');
+                modal.classList.remove('hidden');
+                
+                confirmBtn.onclick = () => {
+                    modal.classList.add('hidden');
+                    resolve(true);
                 };
-                updateTime();
-                setInterval(updateTime, 1000);
+            });
+        }
+
+        window.startAssessment = function() {
+            const name = document.getElementById('user-name').value;
+            const email = document.getElementById('user-email').value;
+            const phone = document.getElementById('user-phone').value;
+
+            if(name && email && phone) {
+                globalUserData = { name, email, phone };
+                
+                document.getElementById('lead-form-section').classList.add('hidden');
+                const assessmentContainer = document.getElementById('assessment-container');
+                assessmentContainer.classList.remove('hidden');
+                document.getElementById('display-name').innerText = name.split(' ')[0];
+                document.getElementById('welcome-message').classList.remove('hidden');
+                assessmentContainer.scrollIntoView({ behavior: 'smooth' });
             }
-        });
+        }
+
+        window.calculateResults = async function() {
+            const form = document.getElementById('assessment-form');
+            if(!form.checkValidity()) {
+                await showModal("Aviso", "Por favor, selecciona una respuesta para todas las preguntas para obtener tu diagnóstico.");
+                return;
+            }
+
+            let neuro = 0, antropo = 0, exegesis = 0;
+
+            const ans = {
+                q1: document.querySelector('input[name="q1"]:checked').value,
+                q2: document.querySelector('input[name="q2"]:checked').value,
+                q3: document.querySelector('input[name="q3"]:checked').value,
+                q4: document.querySelector('input[name="q4"]:checked').value,
+                q5: document.querySelector('input[name="q5"]:checked').value,
+                q6: document.querySelector('input[name="q6"]:checked').value,
+                q7: document.querySelector('input[name="q7"]:checked').value,
+            };
+
+            if(ans.q1 === 'corteza') neuro += 33; else if(ans.q1 === 'bloqueo') neuro += 15;
+            if(ans.q4 === 'integracion') neuro += 33; else if(ans.q4 === 'determinismo') neuro += 15;
+            if(ans.q5 === 'renovacion') neuro += 34; else if(ans.q5 === 'distraccion') neuro += 15;
+
+            if(ans.q2 === 'redencion') antropo += 50; else if(ans.q2 === 'justificacion') antropo += 20;
+            if(ans.q7 === 'gloria') antropo += 50; else if(ans.q7 === 'bienestar') antropo += 20;
+
+            if(ans.q3 === 'exegesis') exegesis += 50; else if(ans.q3 === 'supresion') exegesis += 20;
+            if(ans.q6 === 'perdon') exegesis += 50; else if(ans.q6 === 'aislamiento') exegesis += 20;
+
+            // Enviar datos al servidor
+            try {
+                const encode = (data) => {
+                    return Object.keys(data)
+                        .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
+                        .join("&");
+                };
+
+                const formData = {
+                    "form-name": "cielo_efata_oficial",
+                    "nombre": globalUserData.name,
+                    "email": globalUserData.email,
+                    "whatsapp": globalUserData.phone,
+                    "neuro_score": neuro + "%",
+                    "antropo_score": antropo + "%",
+                    "exegesis_score": exegesis + "%"
+                };
+
+                fetch("/", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                    body: encode(formData)
+                }).then(() => console.log("Datos enviados con éxito"))
+                  .catch(e => console.error("Error de conexión:", e));
+            } catch(e) {
+                console.error("Error al procesar datos:", e);
+            }
+
+            renderChart(neuro, antropo, exegesis);
+        }
+
+        window.renderChart = function(neuro, antropo, exegesis) {
+            const ctx = document.getElementById('radarChart').getContext('2d');
+            if(radarChartInstance) radarChartInstance.destroy();
+
+            radarChartInstance = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['Neuro-Regulación', 'Salud Antropológica', 'Perspectiva Exegética'],
+                    datasets: [{
+                        label: 'Madurez (%)',
+                        data: [neuro, antropo, exegesis],
+                        backgroundColor: 'rgba(139, 92, 246, 0.4)',
+                        borderColor: 'rgba(236, 72, 153, 1)',
+                        pointBackgroundColor: '#fff',
+                        borderWidth: 2,
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            angleLines: { color: 'rgba(255, 255, 255, 0.1)' },
+                            grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                            pointLabels: { color: '#e5e7eb', font: { size: 14, weight: 'bold' } },
+                            ticks: { display: false, min: 0, max: 100 }
+                        }
+                    },
+                    plugins: { legend: { display: false } }
+                }
+            });
+
+            const resultsDesc = document.getElementById('results-description');
+            resultsDesc.innerHTML = `
+                <div class="space-y-6 text-gray-200 mt-6 text-left">
+                    <p class="text-center text-lg text-gray-400 mb-8">Basado en tus respuestas, hemos generado un análisis integral de tus tres dimensiones fundamentales:</p>
+                    
+                    <div class="p-6 md:p-8 bg-brand-dark/60 border-l-4 border-purple-500 rounded-r-xl shadow-md">
+                        <h4 class="text-xl font-bold text-purple-400 mb-3 flex items-center"><i class="fa-solid fa-brain mr-3"></i> 1. Neuro-Regulación (Mente/Cerebro)</h4>
+                        <p class="mb-3 text-sm md:text-base leading-relaxed"><strong>Análisis del estado:</strong> Esta área evalúa el nivel de dominio que tiene tu corteza prefrontal (lógica y templanza) sobre tu amígdala (reacciones de lucha, huida o estrés). Si experimentaste puntajes de alerta, tu sistema nervioso percibe amenazas constantes, generando reacciones impulsivas.</p>
+                        <p class="text-sm md:text-base leading-relaxed text-gray-300"><strong>Recomendación Clínica-Espiritual:</strong> Necesitas ejercitar la <em>Neuroplasticidad Redentora</em>. Aplica pausas de respiración profunda acompañadas de oración (Filipenses 4:6-7) para forzar biológicamente a tu cerebro a salir del "secuestro emocional", sometiendo tus impulsos a la paz de Cristo antes de reaccionar.</p>
+                    </div>
+                    
+                    <div class="p-6 md:p-8 bg-brand-dark/60 border-l-4 border-blue-500 rounded-r-xl shadow-md">
+                        <h4 class="text-xl font-bold text-blue-400 mb-3 flex items-center"><i class="fa-solid fa-fingerprint mr-3"></i> 2. Salud Antropológica (Identidad)</h4>
+                        <p class="mb-3 text-sm md:text-base leading-relaxed"><strong>Análisis del estado:</strong> Evalúa cómo te percibes a ti mismo frente a tu diseño original (Imago Dei). Una fragmentación aquí significa que permites que tus traumas, tu entorno o los diagnósticos dicten tu valor por encima del sacrificio de la Cruz.</p>
+                        <p class="text-sm md:text-base leading-relaxed text-gray-300"><strong>Recomendación Clínica-Espiritual:</strong> Debes desaprender activamente las narrativas destructivas de la cultura y la familia. Tu valor es inmutable y fue comprado a precio de sangre. Medita intensamente en Efesios 1 y 2 para reestructurar tu autoconcepto y afirmar que Cristo define quién eres.</p>
+                    </div>
+
+                    <div class="p-6 md:p-8 bg-brand-dark/60 border-l-4 border-emerald-500 rounded-r-xl shadow-md">
+                        <h4 class="text-xl font-bold text-emerald-400 mb-3 flex items-center"><i class="fa-solid fa-book-bible mr-3"></i> 3. Perspectiva Exegética (Verdad)</h4>
+                        <p class="mb-3 text-sm md:text-base leading-relaxed"><strong>Análisis del estado:</strong> Mide tu capacidad para filtrar tus experiencias y sufrimientos a través de la Escritura. El mayor riesgo es permitir que tus emociones momentáneas "interpreten" a Dios, en lugar de que la Palabra de Dios interprete tus circunstancias.</p>
+                        <p class="text-sm md:text-base leading-relaxed text-gray-300"><strong>Recomendación Clínica-Espiritual:</strong> Practica la "exégesis personal": extrae el significado real de tus crisis usando exclusivamente la Biblia como estándar absoluto. Renueva tu entendimiento diario (Romanos 12:2) llevando todo pensamiento cautivo a la obediencia a Cristo (2 Corintios 10:5).</p>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('assessment-form').classList.add('hidden');
+            const resultsArea = document.getElementById('results-area');
+            resultsArea.classList.remove('hidden');
+            setTimeout(() => resultsArea.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+        }
     </script>
 </body>
 </html>
