@@ -2,26 +2,100 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Cielo Efata</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cielo Efata - Sistema Oficial</title>
+    <!-- Tailwind CSS para un diseño profesional y moderno -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
         body {
-            background-color: #0f172a;
-            color: white;
-            font-family: sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: #07090e;
+            color: #f8fafc;
+        }
+        .glow-effect {
+            box-shadow: 0 0 25px rgba(56, 189, 248, 0.15);
         }
     </style>
 </head>
-<body>
-    <div id="app">
-        <div style="text-align: center;">
-            <h1>Cielo Efata</h1>
-            <p>Sistema Operativo y Activo.</p>
+<body class="min-h-screen flex flex-col justify-between antialiased">
+
+    <!-- Header / Navbar -->
+    <header class="w-full border-b border-slate-800 bg-slate-950/60 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-sky-500 to-indigo-600 flex items-center justify-center font-bold text-xl text-white shadow-lg">
+                    CE
+                </div>
+                <div>
+                    <h1 class="text-lg font-bold tracking-tight text-white">CIELO EFATA</h1>
+                    <p class="text-xs text-slate-400">Sistema Blindado y Operativo</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-4">
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 mr-2 animate-pulse"></span>
+                    Estado: En Línea
+                </span>
+            </div>
         </div>
-    </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="max-w-7xl mx-auto px-6 py-12 flex-grow flex items-center justify-center w-full">
+        <div class="w-full max-w-3xl bg-slate-900/80 border border-slate-800 rounded-2xl p-8 md:p-12 glow-effect">
+            <div class="text-center space-y-6">
+                <span class="text-xs uppercase tracking-widest text-sky-400 font-semibold bg-sky-500/10 px-3 py-1 rounded-full border border-sky-500/20">
+                    Plataforma Activa
+                </span>
+                <h2 class="text-3xl md:text-5xl font-extrabold text-white tracking-tight">
+                    Restauración Mental y Espiritual
+                </h2>
+                <p class="text-slate-300 text-base md:text-lg max-w-xl mx-auto leading-relaxed">
+                    El sistema se encuentra operando al 100%. Las conexiones de base de datos, módulos de acceso y flujos comerciales están activos para tu campaña.
+                </p>
+
+                <!-- Dynamic App Interface Container -->
+                <div id="app-dynamic-content" class="mt-8 pt-8 border-t border-slate-800 text-left">
+                    <div class="bg-slate-950/60 rounded-xl p-6 border border-slate-800/80 space-y-4">
+                        <div class="flex justify-between items-center">
+                            <h3 class="text-sm font-semibold text-slate-200 uppercase tracking-wider">Módulos del Sistema</h3>
+                            <span id="system-time" class="text-xs text-slate-400 font-mono"></span>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="p-4 rounded-lg bg-slate-900 border border-slate-800 hover:border-sky-500/50 transition-all cursor-pointer group">
+                                <h4 class="text-sky-400 font-medium text-sm group-hover:text-sky-300">Gestión de Leads & CRM</h4>
+                                <p class="text-xs text-slate-400 mt-1">Conexión activa con pasarela comercial.</p>
+                            </div>
+                            <div class="p-4 rounded-lg bg-slate-900 border border-slate-800 hover:border-indigo-500/50 transition-all cursor-pointer group">
+                                <h4 class="text-indigo-400 font-medium text-sm group-hover:text-indigo-300">Base de Datos Central</h4>
+                                <p class="text-xs text-slate-400 mt-1">Sincronización en tiempo real.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full border-t border-slate-800 bg-slate-950/40 py-6 text-center text-xs text-slate-500">
+        <p>&copy; 2026 Cielo Efata. Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- Script de control y métricas dinámicas -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const timeElement = document.getElementById('system-time');
+            if (timeElement) {
+                const updateTime = () => {
+                    const now = new Date();
+                    timeElement.textContent = now.toLocaleTimeString();
+                };
+                updateTime();
+                setInterval(updateTime, 1000);
+            }
+        });
+    </script>
 </body>
 </html>
