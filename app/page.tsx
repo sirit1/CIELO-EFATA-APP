@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Header } from '@/components/Header';
 import { AuthorBio } from '@/components/AuthorBio';
@@ -10,7 +10,10 @@ import { Leaderboard } from '@/components/Leaderboard';
 import { StatsWidget } from '@/components/StatsWidget';
 import { Footer } from '@/components/Footer';
 import { Celebration } from '@/components/Celebration';
+import { AuthModal } from '@/components/Auth/AuthModal';
 import { supabase, EvaluationResult } from '@/lib/supabase';
+import { useAuthSession } from '@/lib/auth-client';
+import { processQuizCompletion } from '@/lib/gamification';
 import { Loader } from 'lucide-react';
 
 type AppState = 'welcome' | 'quiz' | 'results';
@@ -19,9 +22,29 @@ export default function Home() {
   const [state, setState] = useState<AppState>('welcome');
   const [loading, setLoading] = useState(false);
   const [resultData, setResultData] = useState<EvaluationResult | null>(null);
+  const [authModalOpen, setAuthModalOpen] = useState(false);
+  const [referralCode, setReferralCode] = useState<string>('');
+  const { user } = useAuthSession();
+
+  // Detectar código referral en URL
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const ref = params.get('ref');
+    if (ref) {
+      setReferralCode(ref);
+    }
+  }, []);
 
   const calcularPuntaje = (respuestas: number[]): number => {
     return respuestas.reduce((sum, r) => sum + r, 0);
+  };
+
+  const determineEmotionalLevel = (puntaje: number): string => {
+    if (puntaje <= 20) return 'Crítico';
+    if (puntaje <= 35) return 'Reactivo';
+    if (puntaje <= 50) return 'Promedio';
+    if (puntaje <= 65) return 'Elevado';
+    return 'Experto';
   };
 
   const handleQuizComplete = async (data: {
@@ -33,6 +56,7 @@ export default function Home() {
     setLoading(true);
     try {
       const puntaje = calcularPuntaje(data.respuestas);
+      const emotionalLevel = determineEmotionalLevel(puntaje);
 
       // Guardar en Supabase
       const { data: savedData, error } = await supabase
@@ -44,6 +68,7 @@ export default function Home() {
             whatsapp: data.whatsapp,
             puntaje: puntaje,
             respuestas: data.respuestas,
+            emotional_level: emotionalLevel,
             created_at: new Date().toISOString(),
           },
         ])
@@ -52,7 +77,16 @@ export default function Home() {
 
       if (error) {
         console.error('Error saving to Supabase:', error);
-        // Continuar sin guardar en BD
+      }
+
+      // Si el usuario está autenticado, procesar gamificación
+      if (user) {
+        await processQuizCompletion(
+          user.id,
+          puntaje,
+          data.respuestas,
+          emotionalLevel
+        );
       }
 
       setResultData({
@@ -65,7 +99,7 @@ export default function Home() {
 
       setState('results');
     } catch (err) {
-      console.error('Error:', err);
+      console.error('[v0] Error:', err);
       alert('Hubo un error. Por favor intenta de nuevo.');
     } finally {
       setLoading(false);
@@ -132,11 +166,11 @@ export default function Home() {
                   <motion.button
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    onClick={() => setState('quiz')}
+                    onClick={() => user ? setState('quiz') : setAuthModalOpen(true)}
                     className="w-full btn-primary text-lg py-4 group"
                   >
                     <span className="flex items-center justify-center gap-2">
-                      Comenzar Evaluación
+                      {user ? 'Comenzar Evaluación' : 'Registrate para Empezar'}
                       <span className="group-hover:translate-x-1 transition-transform">→</span>
                     </span>
                   </motion.button>
@@ -202,6 +236,13 @@ export default function Home() {
         {/* Footer */}
         <Footer />
       </div>
+
+      {/* Auth Modal */}
+      <AuthModal 
+        isOpen={authModalOpen} 
+        onClose={() => setAuthModalOpen(false)}
+        referralCode={referralCode}
+      />
     </main>
   );
 }

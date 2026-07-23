@@ -2,15 +2,71 @@
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import Link from 'next/link';
+import { useAuthSession, signOut } from '@/lib/auth-client';
+import { LogOut, LayoutDashboard } from 'lucide-react';
 
-export function Header() {
+interface HeaderProps {
+  showAuthButtons?: boolean;
+}
+
+export function Header({ showAuthButtons = true }: HeaderProps) {
+  const { user } = useAuthSession();
+
+  const handleLogout = async () => {
+    await signOut();
+    window.location.href = '/';
+  };
+
   return (
-    <motion.div
-      initial={{ opacity: 0, y: -20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, ease: 'easeOut' }}
-      className="text-center space-y-6 py-12"
-    >
+    <div>
+      {/* Top Auth Bar */}
+      {showAuthButtons && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="bg-slate-900/50 border-b border-slate-800 px-4 py-3"
+        >
+          <div className="max-w-6xl mx-auto flex items-center justify-between">
+            {user ? (
+              <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-400 to-indigo-600 flex items-center justify-center text-white text-sm font-bold">
+                    {user.user_metadata?.name?.charAt(0) || user.email?.charAt(0)}
+                  </div>
+                  <span className="text-sm text-white">{user.user_metadata?.name || user.email?.split('@')[0]}</span>
+                </div>
+                <Link
+                  href="/dashboard"
+                  className="flex items-center gap-2 px-3 py-1 bg-indigo-600/20 hover:bg-indigo-600/40 rounded text-indigo-300 text-xs transition"
+                >
+                  <LayoutDashboard className="w-3 h-3" />
+                  Dashboard
+                </Link>
+                <button
+                  onClick={handleLogout}
+                  className="flex items-center gap-2 px-3 py-1 bg-red-600/20 hover:bg-red-600/40 rounded text-red-300 text-xs transition"
+                >
+                  <LogOut className="w-3 h-3" />
+                  Salir
+                </button>
+              </div>
+            ) : (
+              <div className="text-xs text-slate-400">
+                Inicia sesión para guardar tu progreso y acceder a premios
+              </div>
+            )}
+          </div>
+        </motion.div>
+      )}
+
+      {/* Main Header */}
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: 'easeOut' }}
+        className="text-center space-y-6 py-12"
+      >
       {/* Logo con animación flotante */}
       <motion.div
         className="flex justify-center"
