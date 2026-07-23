@@ -1,17 +1,22 @@
 'use client';
 
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { INTERPRETACIONES, BADGES } from '@/lib/quiz-data';
-import { Share2, Download, Award, TrendingUp } from 'lucide-react';
+import { Share2, Download, Award, TrendingUp, Sparkles } from 'lucide-react';
 import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis } from 'recharts';
+import { AIInsights } from './AIInsights';
+import { UpgradeModal } from './UpgradeModal';
 
 interface ResultsDisplayProps {
   nombre: string;
   puntaje: number;
   respuestas: number[];
+  isPremium?: boolean;
 }
 
-export function ResultsDisplay({ nombre, puntaje, respuestas }: ResultsDisplayProps) {
+export function ResultsDisplay({ nombre, puntaje, respuestas, isPremium = false }: ResultsDisplayProps) {
+  const [showUpgrade, setShowUpgrade] = useState(false);
   const interpretacion = INTERPRETACIONES[Math.min(puntaje as keyof typeof INTERPRETACIONES, 4)];
   const promedio = Math.round(respuestas.reduce((a, b) => a + b, 0) / respuestas.length);
 
@@ -198,6 +203,27 @@ export function ResultsDisplay({ nombre, puntaje, respuestas }: ResultsDisplayPr
         </button>
       </motion.div>
 
+      {/* AI Insights Section */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        viewport={{ once: true }}
+        className="space-y-4"
+      >
+        <div className="flex items-center gap-2 mb-4">
+          <Sparkles className="w-6 h-6 text-yellow-400" />
+          <h3 className="text-2xl font-bold text-white">Análisis Inteligente</h3>
+        </div>
+        <AIInsights
+          emotionalLevel={interpretacion.nivel}
+          puntaje={puntaje}
+          respuestas={respuestas}
+          isPremium={isPremium}
+          onUpgrade={() => setShowUpgrade(true)}
+        />
+      </motion.div>
+
       {/* CTA Premium */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -210,6 +236,13 @@ export function ResultsDisplay({ nombre, puntaje, respuestas }: ResultsDisplayPr
         <p className="text-muted">Agenda una sesión 1-a-1 con el Dr. Alejandro Sirit para un análisis profundo</p>
         <button className="btn-primary">Agendar Consulta Ahora</button>
       </motion.div>
+
+      {/* Upgrade Modal */}
+      <UpgradeModal
+        isOpen={showUpgrade}
+        onClose={() => setShowUpgrade(false)}
+        onUpgrade={() => setShowUpgrade(false)}
+      />
     </motion.div>
   );
 }
